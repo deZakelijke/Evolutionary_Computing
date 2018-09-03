@@ -1,1 +1,3 @@
-# Evolutionary_Computing
+# Evolutionary Computing
+
+Repository for the optimisation assignment
