@@ -4,13 +4,13 @@ import org.vu.contest.ContestEvaluation;
 import java.util.Random;
 import java.util.Properties;
 
-public class player0 implements ContestSubmission
+public class player1 implements ContestSubmission
 {
 	Random rnd_;
 	ContestEvaluation evaluation_;
     private int evaluations_limit_;
 	
-	public player0()
+	public player1()
 	{
 		rnd_ = new Random();
 	}
@@ -37,9 +37,9 @@ public class player0 implements ContestSubmission
         boolean isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
 
 		// Do sth with property values, e.g. specify relevant settings of your algorithm
-        if(isMultimodal){
+        if (isMultimodal){
             // Do sth
-        }else{
+        } else {
             // Do sth else
         }
     }
@@ -51,7 +51,7 @@ public class player0 implements ContestSubmission
         int evals = 0;
         // init population
         // calculate fitness
-        while(evals<evaluations_limit_){
+        while (evals < evaluations_limit_){
             // Select parents
             // Apply crossover / mutation operators
             double child[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
