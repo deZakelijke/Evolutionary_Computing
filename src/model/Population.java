@@ -6,6 +6,8 @@ import model.natural_selection.NaturalSelectionInterface;
 import model.recombination.RecombinationInterface;
 import model.sexual_selection.SexualSelectionInterface;
 import model.terminator.Terminator;
+import org.vu.contest.ContestEvaluation;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +33,40 @@ public class Population {
         return newPopulation;
     }
 
-    public void runGeneration(Object evaluator, MutationInterface mutation, RecombinationInterface recombination, NaturalSelectionInterface naturalSelection, SexualSelectionInterface sexualSelection, Terminator terminator) {
+    public boolean runGeneration(ContestEvaluation evaluator, MutationInterface mutation, RecombinationInterface recombination, NaturalSelectionInterface naturalSelection, SexualSelectionInterface sexualSelection, Terminator terminator) {
 
-        //todo: dynamics evaluatorobject bepalen
+        // selection for reproduction
+        List<Individual> parents = sexualSelection.select(populationList);
+
+        // recombination
+        List<Individual> children = recombination.reproduce(parents);
+
+        // mutation
+        children = mutation.doMutation(children);
+
+        // reevaluate
+        for (Individual child : children) {
+            child.setFitness((double) evaluator.evaluate(child));
+        }
+
+        // natural selection
+        naturalSelection.kill(populationList);
+
+        // add to population
+        for (Individual child : children) {
+            getPopulationList().add(child);
+        }
+
+        // recalculate populationfitnessness
+        reCalculateStats();
+
+        // determine if we are done
+        return (terminator.isItDone());
+
+    }
+
+    private void reCalculateStats() {
+        throw new NotImplementedException();
     }
 
     public List<Individual> getPopulationList() {

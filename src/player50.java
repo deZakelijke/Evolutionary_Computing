@@ -2,6 +2,9 @@ import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
 
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Properties;
 
@@ -49,7 +52,6 @@ public class player50 implements ContestSubmission
 	public void run()
 	{
 		// Run your algorithm here
-        
         int evals = 0;
         // init population
         // calculate fitness

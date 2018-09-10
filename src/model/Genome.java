@@ -1,14 +1,16 @@
 package model;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class Genome {
 
-    private String genome = "";
+    private double[] genome;
     private int size = 0;
 
 
-    public Genome(String genome) {
+    public Genome(double[] genome) {
         setGenome(genome);
-        setSize(genome.length());
+        setSize(genome.length);
     }
 
     public Genome(int size) {
@@ -16,17 +18,17 @@ public class Genome {
         setSize(size);
     }
 
-    private String createRandom(int size) {
+    private double[] createRandom(int size) {
 
         //todo: create random genome
-        return "";
+        throw new NotImplementedException();
     }
 
-    public String getGenome() {
+    public double[] getGenome() {
         return genome;
     }
 
-    public void setGenome(String genome) {
+    public void setGenome(double[] genome) {
         this.genome = genome;
     }
 

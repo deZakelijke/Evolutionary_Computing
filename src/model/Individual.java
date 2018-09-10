@@ -4,7 +4,7 @@ package model;
 public class Individual {
 
     private Genome genome;
-    private int fitness;
+    private double fitness;
     private int age;
 
     public Individual(Genome genome) {
@@ -19,11 +19,11 @@ public class Individual {
         this.genome = genome;
     }
 
-    public int getFitness() {
+    public double getFitness() {
         return fitness;
     }
 
-    public void setFitness(int fitness) {
+    public void setFitness(double fitness) {
         this.fitness = fitness;
     }
 
@@ -33,5 +33,9 @@ public class Individual {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void ageOneYear() {
+        setAge(getAge()+1);
     }
 }
