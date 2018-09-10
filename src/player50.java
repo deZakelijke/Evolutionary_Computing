@@ -4,13 +4,13 @@ import org.vu.contest.ContestEvaluation;
 import java.util.Random;
 import java.util.Properties;
 
-public class player1 implements ContestSubmission
+public class player50 implements ContestSubmission
 {
 	Random rnd_;
 	ContestEvaluation evaluation_;
     private int evaluations_limit_;
 	
-	public player1()
+	public player50()
 	{
 		rnd_ = new Random();
 	}
