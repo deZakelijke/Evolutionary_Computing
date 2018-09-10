@@ -1,0 +1,9 @@
+{
+  "runName" : "test",
+  "population" : 100;
+  "mutation" : {"name" : "basic", "arguments" : []},
+  "naturalSelection" : {"name" : "basic", "arguments" : []},
+  "recombination" : {"name" : "basic", "arguments" : []},
+  "sexualSelection" : {"name" : "basic", "arguments" : []}
+
+}

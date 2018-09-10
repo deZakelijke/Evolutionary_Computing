@@ -4,6 +4,13 @@
 Repository for the optimisation assignment
 
 
+## Voorstel opzet:
+
+
+
+
+
+
 ### Compilation and testing commands from the tutorial
 #### Compile
 javac -cp contest.jar player1.java  
