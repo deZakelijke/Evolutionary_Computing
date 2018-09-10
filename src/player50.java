@@ -23,6 +23,8 @@ public class player50 implements ContestSubmission
 
 	public void setEvaluation(ContestEvaluation evaluation)
 	{
+
+		System.out.println("a");
 		// Set evaluation problem used in the run
 		evaluation_ = evaluation;
 		
