@@ -20,6 +20,8 @@ public class Population {
     private int averageFitness;
     private int populationSize;
 
+    private int banana;
+
     public Population(int sizePopulation, int sizeGenomes) {
         setPopulationList(createNewPopulation(sizePopulation, sizeGenomes));
         setPopulationSize(sizePopulation);
@@ -33,7 +35,7 @@ public class Population {
         return newPopulation;
     }
 
-    public boolean runGeneration(ContestEvaluation evaluator, MutationInterface mutation, RecombinationInterface recombination, NaturalSelectionInterface naturalSelection, SexualSelectionInterface sexualSelection, Terminator terminator) {
+    public void runGeneration(ContestEvaluation evaluator, MutationInterface mutation, RecombinationInterface recombination, NaturalSelectionInterface naturalSelection, SexualSelectionInterface sexualSelection, Terminator terminator) {
 
         // selection for reproduction
         List<Individual> parents = sexualSelection.select(populationList);
@@ -59,9 +61,6 @@ public class Population {
 
         // recalculate populationfitnessness
         reCalculateStats();
-
-        // determine if we are done
-        return (terminator.isItDone());
 
     }
 
