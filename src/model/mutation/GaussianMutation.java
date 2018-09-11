@@ -1,8 +1,7 @@
 package model.mutation;
 
 import model.Individual;
-// Java packages importeren lukt me nog niet helemaal :(
-import org.apache.commons.math3.analysis.function.Gaussian;
+import java.util.Random;
 import model.Genome;
 
 import java.util.List;
@@ -23,6 +22,7 @@ public class GaussianMutation implements MutationInterface {
         int genome_size;
         Genome mutated_genome;
         double genome_array[];
+        Random r = new Random();
 
         for (int i = 0; i < nr_children; i++) {
             mutated_genome = children.get(i).getGenome();
@@ -30,8 +30,9 @@ public class GaussianMutation implements MutationInterface {
             genome_array = mutated_genome.getGenome();
 
             for (int j = 0; j < genome_size; j++) {
-                genome_array[j] += Gaussian(); // Can be done with mean and variance
+                genome_array[j] += r.nextGaussian(); // Can be done with mean and variance
             }
         }
+        return children;
     }
 }
