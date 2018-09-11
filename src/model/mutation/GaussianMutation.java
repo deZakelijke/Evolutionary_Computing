@@ -1,12 +1,13 @@
 package model.mutation;
 
 import model.Individual;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import java.lang.object.Gaussian;
+// Java packages importeren lukt me nog niet helemaal :(
+import org.apache.commons.math3.analysis.function.Gaussian;
+import model.Genome;
 
 import java.util.List;
 
-public class BasicMutation implements MutationInterface {
+public class GaussianMutation implements MutationInterface {
 
     /**
      * Mutation function for mutating children with Gaussian.
@@ -19,7 +20,7 @@ public class BasicMutation implements MutationInterface {
     @Override
     public List<Individual> doMutation(List<Individual> children) {
         int nr_children = children.size();
-        int genome_sze;
+        int genome_size;
         Genome mutated_genome;
         double genome_array[];
 

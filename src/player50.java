@@ -1,5 +1,5 @@
 import model.Population;
-import model.mutation.BasicMutation;
+import model.mutation.GaussianMutation;
 import model.mutation.EmptyMutation;
 import model.mutation.MutationInterface;
 import model.natural_selection.BasicNaturalSelection;
@@ -158,7 +158,8 @@ public class player50 implements ContestSubmission  {
 
 		// mutations
 		mutationMap.put("empty", new EmptyMutation());
-		mutationMap.put("basic", new BasicMutation());
+		//mutationMap.put("basic", new BasicMutation());
+		mutationMap.put("Gaussian", new GaussianMutation());
 
 		// natural selections
 		naturalSelectionMap.put("empty", new EmptyNaturalSelection());
