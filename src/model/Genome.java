@@ -3,7 +3,13 @@ package model;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.Random;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Genome {
+
+    private Random rnd_;
 
     private double[] genome;
     private int size = 0;
@@ -19,16 +25,14 @@ public class Genome {
         setSize(size);
     }
 
-    private void createRandom(int size) {
-        // TODO make adjustable range
-        double min = -5.0;
-        double max = 5.0;
-        Random r = new Random();
-        this.genome = new double[size];
-
+    private double[] createRandom(int size) {
+        genome = new double[size];
         for (int i = 0; i < size; i++) {
-            this.genome[i] = min + (max - min) * r.nextDouble();
+            genome[i] = (rnd_.nextDouble()-0.5)*1.0;
+
         }
+        return genome;
+
     }
 
     public double[] getGenome() {
