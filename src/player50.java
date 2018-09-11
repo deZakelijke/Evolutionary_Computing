@@ -1,4 +1,3 @@
-import model.Population;
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
@@ -24,9 +23,6 @@ public class player50 implements ContestSubmission  {
 	public void setEvaluation(ContestEvaluation evaluation)
 	{
 
-		Population pop = new Population(2, 2);
-
-		System.out.println("nbanan");
 
 		// Set evaluation problem used in the run
 		evaluation_ = evaluation;
@@ -52,10 +48,15 @@ public class player50 implements ContestSubmission  {
 	public void run()
 	{
 
+
+
 		// Run your algorithm here
         int evals = 0;
+
         // init population
+
         // calculate fitness
+
         while (evals < evaluations_limit_) {
 
 
