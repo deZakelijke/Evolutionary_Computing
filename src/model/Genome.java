@@ -2,7 +2,13 @@ package model;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Genome {
+
+    private Random rnd_;
 
     private double[] genome;
     private int size = 0;
@@ -20,8 +26,18 @@ public class Genome {
 
     private double[] createRandom(int size) {
 
-        //todo: create random genome
-        throw new NotImplementedException();
+        genome = new double[size];
+
+        int i = 0;
+        while (i<size) {
+
+            genome[i] = (rnd_.nextDouble()-0.5)*1.0;
+
+            i++;
+        }
+
+        return genome;
+
     }
 
     public double[] getGenome() {
