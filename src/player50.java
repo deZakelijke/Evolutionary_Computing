@@ -2,10 +2,6 @@ import model.Population;
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
-import model.Individual;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.Properties;
 
