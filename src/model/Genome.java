@@ -1,6 +1,7 @@
 package model;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.util.Random;
 
 public class Genome {
 
@@ -18,10 +19,16 @@ public class Genome {
         setSize(size);
     }
 
-    private double[] createRandom(int size) {
+    private void createRandom(int size) {
+        // TODO make adjustable range
+        double min = -5.0;
+        double max = 5.0;
+        Random r = new Random();
+        this.genome = new double[size];
 
-        //todo: create random genome
-        throw new NotImplementedException();
+        for (int i = 0; i < size; i++) {
+            this.genome[i] = min + (max - min) * r.nextDouble();
+        }
     }
 
     public double[] getGenome() {
@@ -38,5 +45,13 @@ public class Genome {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    // Might not be necessary
+    public void setAllele(double allele, int index) {
+        if (index >= this.size) {
+            throw new IndexOutOfBoundsException();
+        }
+        this.genome[index] = allele;
     }
 }
