@@ -1,17 +1,17 @@
+import model.Population;
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
-
+import model.Individual;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Properties;
 
-public class player50 implements ContestSubmission
-{
-	Random rnd_;
-	ContestEvaluation evaluation_;
+public class player50 implements ContestSubmission  {
+	private Random rnd_;
+	private ContestEvaluation evaluation_;
     private int evaluations_limit_;
 	
 	public player50()
@@ -27,6 +27,10 @@ public class player50 implements ContestSubmission
 
 	public void setEvaluation(ContestEvaluation evaluation)
 	{
+
+		Population pop = new Population(2, 2);
+
+		System.out.println("nbanan");
 
 		// Set evaluation problem used in the run
 		evaluation_ = evaluation;
@@ -51,6 +55,7 @@ public class player50 implements ContestSubmission
     
 	public void run()
 	{
+
 		// Run your algorithm here
         int evals = 0;
         // init population
