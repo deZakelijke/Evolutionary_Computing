@@ -33,6 +33,8 @@ public class player50 implements ContestSubmission  {
 	private static final String RECOMBINATION ="RECOMBINATION";
 	private static final String TERMINATION ="TERMINATION";
 
+	private boolean LOG;
+
     private Map<String, MutationInterface> mutationMap = new HashMap<>();
 	private Map<String, NaturalSelectionInterface> naturalSelectionMap = new HashMap<>();
 	private Map<String, SexualSelectionInterface> sexualSelectionMap = new HashMap<>();
@@ -51,13 +53,18 @@ public class player50 implements ContestSubmission  {
 	}
 
 	/**
-	 *
-	 * @return configuration of EA that is to be runned
+	 * Determines tre configuration of EA that is to be used at next run
+	 * @return configuration hashmap
 	 */
 	private Map getRunConfiguration() {
 
-		/**  !!! yo guys, BEPAAL HIER CONFIGURATIE!!!! */ //tempcomment
-		// vanwege dependencies maar geen json inlezen maar gewoon een map
+
+		/**##########################################*/
+		/**  !!! yo guys, BEPAAL HIER CONFIGURATIE!!!! */
+		/**##########################################*/
+
+
+		// note: vanwege dependencies maar geen json inlezen maar gewoon een map
 		Map<String, String> config  = new HashMap();
 
 		config.put(	TERMINATION, 		"generation_based");
@@ -66,12 +73,20 @@ public class player50 implements ContestSubmission  {
 		config.put(	RECOMBINATION, 		"empty");
 		config.put(	MUTATION, 			"empty");
 
+		// determines wether run will be logged
+		LOG = false;
+
 		return config;
 	}
 
+	/**
+	 * Holds information on
+	 */
 	private void fillConfigurationMap() {
 
+		/**##########################################*/
 		/** yo guys, voeg hier ALLE nieuwe IMPLEMENTATIES toe !! */ //temp-comment
+		/**##########################################*/
 
 		// mutations
 		mutationMap.put("empty", new EmptyMutation());
@@ -188,12 +203,16 @@ public class player50 implements ContestSubmission  {
 			System.out.println("Done evolving");
 
 			// export run
-			stats.exportRun(String.format("/results/run_%s.csv", String.valueOf(run_nr)));
+			if (LOG) {
+				stats.exportRun(String.format("/results/run_%s.csv", String.valueOf(run_nr)));
+			}
 
 		} catch (Exception e) {
 
 			// export run
-			stats.exportRun(String.format("/results/error_run_%s.csv", String.valueOf(run_nr)));
+			if (LOG) {
+				stats.exportRun(String.format("/results/error_run_%s.csv", String.valueOf(run_nr)));
+			}
 			e.printStackTrace();
 			throw e;
 

@@ -2,6 +2,9 @@ package model.stats;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +28,56 @@ public class Statistics {
         run.add(stat);
     }
 
+    /**
+     * Exports a run to a csv file for analysis and plotting
+     * @param filename
+     */
     public void exportRun(String filename) {
-        System.getProperty("user.dir");
+
+            List<String> data = accumelateData();
+
+            try {
+
+
+                String path = System.getProperty("user.dir") + "/log/"+filename;
+
+                PrintWriter pw = new PrintWriter(new File(path));
+
+                StringBuilder sb = new StringBuilder();
+
+                for (String dataLine : data) {
+                    sb.append(dataLine);
+                    sb.append("\n");
+                }
+
+                pw.write(sb.toString());
+                pw.close();
+
+                System.out.println("Saved: "+ path);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                for (String datalLine : data) {
+                    System.out.println(datalLine);
+                }
+
+                System.out.println("\n\nSaving logs failed, printed to terminal instead in order to not lose anything");
+            }
+
+    }
+
+    /**
+     * retrieves data from run list
+     * @return
+     */
+    private List<String> accumelateData() {
+        //todo: get real data
+
+        List<String> data = new ArrayList<>();
+        data.add("a,b,c");
+        data.add("d,e,f");
+        return data;
+
     }
 
     public void printLastStatistics() {
