@@ -2,6 +2,7 @@ import model.Population;
 import model.mutation.GaussianMutation;
 import model.mutation.EmptyMutation;
 import model.mutation.MutationInterface;
+import model.mutation.UniformMutation;
 import model.natural_selection.BasicNaturalSelection;
 import model.natural_selection.EmptyNaturalSelection;
 import model.natural_selection.NaturalSelectionInterface;
@@ -51,24 +52,55 @@ public class player50 implements ContestSubmission  {
 		rnd_.setSeed(seed);
 	}
 
-	private Map getConfigF() {
+	/**
+	 *
+	 * @return configuration of EA that is to be runned
+	 */
+	private Map getRunConfiguration() {
 
-		// BEPAAL HIER CONFIGURATIE
+		/**  !!! yo guys, BEPAAL HIER CONFIGURATIE!!!! */ //tempcomment
 		// vanwege dependencies maar geen json inlezen maar gewoon een map
 		Map<String, String> config  = new HashMap();
 
-		config.put(TERMINATION, "basic");
-		config.put(SEXUAL, "empty");
-		config.put(NATURAL, "empty");
-		config.put(RECOMBINATION, "empty");
-		config.put(MUTATION, "empty");
+		config.put(	TERMINATION, 		"basic");
+		config.put(	SEXUAL,				"empty");
+		config.put(	NATURAL, 			"empty");
+		config.put(	RECOMBINATION, 		"empty");
+		config.put(	MUTATION, 			"empty");
 
 		return config;
 	}
 
+	private void fillConfigurationMap() {
+
+		/** yo guys, voeg hier ALLE nieuwe IMPLEMENTATIES toe !! */ //temp-comment
+
+		// mutations
+		mutationMap.put("empty", new EmptyMutation());
+		mutationMap.put("uniform", new UniformMutation());
+		mutationMap.put("gaussian", new GaussianMutation());
+
+		// natural selections
+		naturalSelectionMap.put("empty", new EmptyNaturalSelection());
+		naturalSelectionMap.put("basic", new BasicNaturalSelection());
+
+		// terminators
+		terminatorMap.put("empty", new EmptyTerminator());
+		terminatorMap.put("basic", new BasicTerminator(evaluations_limit_));
+
+		// sexual selections
+		sexualSelectionMap.put("empty", new EmptySexualSelection());
+		sexualSelectionMap.put("basic", new BasicSexualSelection());
+
+		// recombinations
+		recombinationMap.put("empty", new EmptyRecombination());
+		recombinationMap.put("basic", new BasicRecombination());
+
+	}
+
 	public void setEvaluation(ContestEvaluation evaluation)
 	{
-
+		//todo: deze door de VU gegeven functie begrijpen
 
 		// Set evaluation problem used in the run
 		evaluation_ = evaluation;
@@ -90,13 +122,16 @@ public class player50 implements ContestSubmission  {
             // Do sth else
         }
     }
-    
+
+	/**
+	 * runs EA
+	 */
 	public void run()
 	{
 
 		// config utils
-		fillConfigMap();
-		Map config = getConfigF();
+		fillConfigurationMap();
+		Map config = getRunConfiguration();
 
 		// print configuration
 		System.out.println("Configuration:\n"+config.toString());
@@ -128,7 +163,7 @@ public class player50 implements ContestSubmission  {
 			System.out.println(String.format("Number of exhausted evaluations: %d out of %d", terminator.getDoneEvaluations(), evaluations_limit_));
 
 			// do one generation
-        	population.runGeneration(evaluation_,mutation, recomb, natural, sexual, terminator);
+        	population.runGeneration(evaluation_, mutation, recomb, natural, sexual, terminator);
 
         	// add measurement
 			stats.addStatistic(population.getStatistic());
@@ -141,6 +176,9 @@ public class player50 implements ContestSubmission  {
 			// notify user of progress
 			stats.printLastStatistics();
 			System.out.println("Finished generation\n");
+
+			//++ generation number
+			generation++;
         }
 
         // final notification
@@ -152,30 +190,4 @@ public class player50 implements ContestSubmission  {
         stats.exportRun(String.format("/results/run_%s.csv", String.valueOf(new Date().getTime())));
 	}
 
-
-
-	private void fillConfigMap() {
-
-		// mutations
-		mutationMap.put("empty", new EmptyMutation());
-		//mutationMap.put("basic", new BasicMutation());
-		mutationMap.put("Gaussian", new GaussianMutation());
-
-		// natural selections
-		naturalSelectionMap.put("empty", new EmptyNaturalSelection());
-		naturalSelectionMap.put("basic", new BasicNaturalSelection());
-
-		// terminators
-		terminatorMap.put("empty", new EmptyTerminator());
-		terminatorMap.put("basic", new BasicTerminator(evaluations_limit_));
-
-		// sexual selections
-		sexualSelectionMap.put("empty", new EmptySexualSelection());
-		sexualSelectionMap.put("basic", new BasicSexualSelection());
-
-		// recombinations
-		recombinationMap.put("empty", new EmptyRecombination());
-		recombinationMap.put("basic", new BasicRecombination());
-
-	}
 }

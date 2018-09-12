@@ -1,6 +1,9 @@
 package model;
 
-// = fenotype
+/**
+ * Fenotype class,
+ * Hold an individuals genotype, fitness and age
+ */
 public class Individual {
 
     private Genome genome;
@@ -36,6 +39,6 @@ public class Individual {
     }
 
     public void ageOneYear() {
-        setAge(getAge()+1);
+        age++;
     }
 }

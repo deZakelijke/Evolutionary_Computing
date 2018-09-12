@@ -5,6 +5,10 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Object that holds the logs of entire run
+ *
+ */
 public class Statistics {
 
     private List<Statistic> run = new ArrayList<>();

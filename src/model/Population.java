@@ -12,6 +12,11 @@ import org.vu.contest.ContestEvaluation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Population class,
+ * holds a list of individuals and its stats
+ * furthermore, important EA functions that work on the population are defined here
+ */
 public class Population {
 
     private List<Individual> populationList;
@@ -28,9 +33,17 @@ public class Population {
     //todo: naar stdev
     private double[] averageGenomes = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
-    //todo: naar average van stdev
+    //todo: naar average of stdev
     private double averageOfAverageGenomes;
 
+    /**
+     * init / constructor
+     *
+     * @param sizePopulation
+     * @param sizeGenomes
+     * @param evaluator
+     * @param terminator
+     */
     public Population(int sizePopulation, int sizeGenomes, ContestEvaluation evaluator, Terminator terminator) {
 
         // build new
@@ -39,7 +52,7 @@ public class Population {
         // save size
         setPopulationSize(sizePopulation);
 
-        // evaluate first
+        // evaluate first, EA Fase: evaluate initial population
         for (Individual initialIndividual : populationList) {
             initialIndividual.setFitness((double) evaluator.evaluate(initialIndividual.getGenome().getGenome()));
             terminator.addEvaluation();
@@ -47,6 +60,14 @@ public class Population {
         reCalculateStats();
     }
 
+    /**
+     * creates new population of random individuals
+     * EA fase: initialisation
+     *
+     * @param sizePopulation
+     * @param sizeGenomes
+     * @return
+     */
     private List<Individual> createNewPopulation(int sizePopulation, int sizeGenomes) {
         List<Individual> newPopulation = new ArrayList<>(sizePopulation);
         for (int i = 0; i < sizePopulation; i++) {
@@ -55,6 +76,16 @@ public class Population {
         return newPopulation;
     }
 
+    /**
+     * runs one generation of EA for the population
+     *
+     * @param evaluator fitness evaluation
+     * @param mutation implementation
+     * @param recombination implementation
+     * @param naturalSelection (selecting for next generation) implementation
+     * @param sexualSelection (selecting parents) implementation
+     * @param terminator = context object which holds termination condition and nr of evaluations
+     */
     public void runGeneration(ContestEvaluation evaluator, MutationInterface mutation, RecombinationInterface recombination, NaturalSelectionInterface naturalSelection, SexualSelectionInterface sexualSelection, Terminator terminator) {
 
         try {
@@ -107,6 +138,10 @@ public class Population {
         }
     }
 
+    /**
+     * calculate statistics of current population.
+     * todo: afmaken
+     */
     private void reCalculateStats() {
 
         double max = -6.0;
@@ -145,6 +180,7 @@ public class Population {
         highestFitness = max;
         lowestFitness = min;
 
+        //todo: afmaken
         stdevFitness = 404.0;
 
 
@@ -214,8 +250,16 @@ public class Population {
         this.averageOfAverageGenomes = averageOfAverageGenomes;
     }
 
+    /** builds statistic object of current
+     *
+     * @return
+     */
     public Statistic getStatistic() {
 
+        //update
+        reCalculateStats();
+
+        // return build
         return new Statistic(lowestFitness, highestFitness, averageFitness, populationSize, stdevFitness, averageGenomes, averageOfAverageGenomes);
 
     }

@@ -2,6 +2,9 @@ package model.stats;
 
 import java.util.Arrays;
 
+/**
+ * data object to hold data of the population at one moment in time
+ */
 public class Statistic {
 
     private double lowestFitness;
@@ -86,8 +89,9 @@ public class Statistic {
                 ", averageFitness=" + averageFitness +
                 ", populationSize=" + populationSize +
                 ", stdevFitness=" + stdevFitness +
-                ", stdevGenomes=" + Arrays.toString(stdevGenomes) +
+
                 ", averageOfStDevGenomes=" + averageOfStDevGenomes +
+                ", stdevGenomes=" + Arrays.toString(stdevGenomes) +
                 '}';
     }
 }
