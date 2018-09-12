@@ -141,8 +141,6 @@ public class player50 implements ContestSubmission  {
 	/**
 	 * runs EA
 	 */
-
-
 	public void run()
 	{
 
