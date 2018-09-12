@@ -13,9 +13,7 @@ import model.sexual_selection.BasicSexualSelection;
 import model.sexual_selection.EmptySexualSelection;
 import model.sexual_selection.SexualSelectionInterface;
 import model.stats.Statistics;
-import model.terminator.BasicTerminator;
-import model.terminator.EmptyTerminator;
-import model.terminator.Terminator;
+import model.terminator.*;
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
@@ -62,7 +60,7 @@ public class player50 implements ContestSubmission  {
 		// vanwege dependencies maar geen json inlezen maar gewoon een map
 		Map<String, String> config  = new HashMap();
 
-		config.put(	TERMINATION, 		"basic");
+		config.put(	TERMINATION, 		"generation_based");
 		config.put(	SEXUAL,				"empty");
 		config.put(	NATURAL, 			"empty");
 		config.put(	RECOMBINATION, 		"empty");
@@ -85,8 +83,10 @@ public class player50 implements ContestSubmission  {
 		naturalSelectionMap.put("basic", new BasicNaturalSelection());
 
 		// terminators
-		terminatorMap.put("empty", new EmptyTerminator());
-		terminatorMap.put("basic", new BasicTerminator(evaluations_limit_));
+		terminatorMap.put("indefinite", new EmptyTerminator());
+		terminatorMap.put("evaluation_based", new EvaluationsExhaustedTerminator(evaluations_limit_));
+		terminatorMap.put("generation_based", new FixedGenerationsTerminator(100));
+		terminatorMap.put("score_based", new FixedScoreTerminator(9.5));
 
 		// sexual selections
 		sexualSelectionMap.put("empty", new EmptySexualSelection());
@@ -126,68 +126,80 @@ public class player50 implements ContestSubmission  {
 	/**
 	 * runs EA
 	 */
+
+
 	public void run()
 	{
 
-		// config utils
-		fillConfigurationMap();
-		Map config = getRunConfiguration();
-
-		// print configuration
-		System.out.println("Configuration:\n"+config.toString());
-
-		// init configuration
-		Terminator terminator = terminatorMap.get(config.get(TERMINATION));
-		SexualSelectionInterface sexual = sexualSelectionMap.get(config.get(SEXUAL));
-		NaturalSelectionInterface natural = naturalSelectionMap.get(config.get(NATURAL));
-		RecombinationInterface recomb = recombinationMap.get(config.get(RECOMBINATION));
-		MutationInterface mutation = mutationMap.get(config.get(MUTATION));
-
 		// init logs
 		Statistics stats = new Statistics();
+		long run_nr = new Date().getTime();
 
-        // init population
-		Population population = new Population(POPULATIONSIZE, GENOMESIZE, evaluation_, terminator);
+		try {
+			// config utils
+			fillConfigurationMap();
+			Map config = getRunConfiguration();
 
-		// add first measurement
-		stats.addStatistic(population.getStatistic());
+			// print configuration
+			System.out.println("Configuration:\n" + config.toString());
 
-		// initialize counter
-		int generation = 0;
+			// init configuration
+			Terminator terminator = terminatorMap.get(config.get(TERMINATION));
+			SexualSelectionInterface sexual = sexualSelectionMap.get(config.get(SEXUAL));
+			NaturalSelectionInterface natural = naturalSelectionMap.get(config.get(NATURAL));
+			RecombinationInterface recomb = recombinationMap.get(config.get(RECOMBINATION));
+			MutationInterface mutation = mutationMap.get(config.get(MUTATION));
 
-		// run generations
-        while (true) {
+			// init population
+			Population population = new Population(POPULATIONSIZE, GENOMESIZE, evaluation_, terminator);
 
-        	// notify user of start
-			System.out.println(String.format("Start generation: %d", generation));
-			System.out.println(String.format("Number of exhausted evaluations: %d out of %d", terminator.getDoneEvaluations(), evaluations_limit_));
-
-			// do one generation
-        	population.runGeneration(evaluation_, mutation, recomb, natural, sexual, terminator);
-
-        	// add measurement
+			// add first measurement
 			stats.addStatistic(population.getStatistic());
 
-			// check termination condition
-			if(terminator.isItDone(population)) {
-				break;
+			// run generations
+			while (true) {
+
+				// notify user of start
+				System.out.println(String.format("Start generation: %d", terminator.getGenerationNumber()));
+				System.out.println(String.format("Number of exhausted evaluations: %d out of %d", terminator.getDoneEvaluations(), evaluations_limit_));
+
+				// do one generation
+				population.runGeneration(evaluation_, mutation, recomb, natural, sexual, terminator);
+
+				// add measurement
+				stats.addStatistic(population.getStatistic());
+
+				// check termination condition
+				if (terminator.isItDone(population)) {
+					break;
+				}
+
+				// notify user of progress
+				stats.printLastStatistics();
+				System.out.println("Finished generation\n");
+
+				//++ generation number
+				terminator.addGeneration();
 			}
 
-			// notify user of progress
+			// final notification
+			System.out.println("Final score:");
 			stats.printLastStatistics();
-			System.out.println("Finished generation\n");
+			System.out.println("Done evolving");
 
-			//++ generation number
-			generation++;
-        }
+			// export run
+			stats.exportRun(String.format("/results/run_%s.csv", String.valueOf(run_nr)));
 
-        // final notification
-		System.out.println("Final score:");
-		stats.printLastStatistics();
-		System.out.println("Done evolving");
+		} catch (Exception e) {
 
-		// export run
-        stats.exportRun(String.format("/results/run_%s.csv", String.valueOf(new Date().getTime())));
+			// export run
+			stats.exportRun(String.format("/results/error_run_%s.csv", String.valueOf(run_nr)));
+			e.printStackTrace();
+			throw e;
+
+		}
+
+
 	}
 
 }

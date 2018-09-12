@@ -26,7 +26,7 @@ public class Statistics {
     }
 
     public void exportRun(String filename) {
-        throw new NotImplementedException();
+        System.getProperty("user.dir");
     }
 
     public void printLastStatistics() {

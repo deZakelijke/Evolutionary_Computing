@@ -18,6 +18,10 @@ public interface Terminator {
 
     void addEvaluation();
 
+    void addGeneration();
+
     public int getDoneEvaluations();
+
+    int getGenerationNumber();
 }
 
