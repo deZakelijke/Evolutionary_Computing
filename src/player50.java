@@ -3,12 +3,10 @@ import model.mutation.GaussianMutation;
 import model.mutation.EmptyMutation;
 import model.mutation.MutationInterface;
 import model.mutation.UniformMutation;
-import model.natural_selection.BasicNaturalSelection;
-import model.natural_selection.EmptyNaturalSelection;
-import model.natural_selection.FixedPopulationRandomNaturalSelection;
-import model.natural_selection.NaturalSelectionInterface;
+import model.natural_selection.*;
 import model.recombination.BasicRecombination;
 import model.recombination.EmptyRecombination;
+import model.recombination.OnePointRandomRecombination;
 import model.recombination.RecombinationInterface;
 import model.sexual_selection.BasicSexualSelection;
 import model.sexual_selection.EmptySexualSelection;
@@ -68,10 +66,10 @@ public class player50 implements ContestSubmission  {
 		// note: vanwege dependencies maar geen json inlezen maar gewoon een map
 		Map<String, String> config  = new HashMap();
 
-		config.put(	TERMINATION, 		"generation_based");
+		config.put(	TERMINATION, 		"evaluation_based");
 		config.put(	SEXUAL,				"empty");
-		config.put(	NATURAL, 			"fixed_population_random");
-		config.put(	RECOMBINATION, 		"empty");
+		config.put(	NATURAL, 			"fixed_population_worst");
+		config.put(	RECOMBINATION, 		"one_point_random");
 		config.put(	MUTATION, 			"uniform");
 
 		// determines wether run will be logged
@@ -98,6 +96,7 @@ public class player50 implements ContestSubmission  {
 		naturalSelectionMap.put("empty", new EmptyNaturalSelection());
 		naturalSelectionMap.put("basic", new BasicNaturalSelection());
 		naturalSelectionMap.put("fixed_population_random", new FixedPopulationRandomNaturalSelection(POPULATIONSIZE));
+		naturalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffNaturalSelection(POPULATIONSIZE-50));
 
 		// terminators
 		terminatorMap.put("indefinite", new EmptyTerminator());
@@ -108,12 +107,11 @@ public class player50 implements ContestSubmission  {
 		// sexual selections
 		sexualSelectionMap.put("empty", new EmptySexualSelection());
 		sexualSelectionMap.put("basic", new BasicSexualSelection());
-//		sexualSelectionMap.put("test", new TestSexualSelection());
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
 		recombinationMap.put("basic", new BasicRecombination());
-//		recombinationMap.put("test", new TestRecombination());
+		recombinationMap.put("one_point_random", new OnePointRandomRecombination());
 
 	}
 

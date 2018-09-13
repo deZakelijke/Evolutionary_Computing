@@ -2,19 +2,19 @@ package model.natural_selection;
 
 import model.Individual;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-public class FixedPopulationRandomNaturalSelection implements NaturalSelectionInterface
+public class FixedPopulationKillWorstOffNaturalSelection implements NaturalSelectionInterface
 
 
 
 {
 
-    Random rand = new Random();
     int size  = 0;
 
-    public FixedPopulationRandomNaturalSelection(int initialPopulationSize) {
+    public FixedPopulationKillWorstOffNaturalSelection(int initialPopulationSize) {
         this.size = initialPopulationSize;
     }
 
@@ -23,8 +23,10 @@ public class FixedPopulationRandomNaturalSelection implements NaturalSelectionIn
 
         int i = 0;
 
+        populationList.sort(Comparator.comparing(Individual::getFitness));
+
         while (populationList.size() > size) {
-            populationList.remove(rand.nextInt(populationList.size() - 1));
+            populationList.remove(0);
             i++;
         }
 

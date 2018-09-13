@@ -17,6 +17,15 @@ public class Genome {
     private double[] genome;
     private int size = 0;
 
+    public double[] onePointCrossover(int index, Genome partnersDNA) {
+        double[] newGenome = new double[size];
+        for (int i = 0; i < genome.length-1; i++) {
+            double[] target = i < index ? genome : partnersDNA.getGenome();
+            newGenome[i] = target[i];
+        }
+        return newGenome;
+    }
+
 
     public Genome(double[] genome) {
         setGenome(genome);
