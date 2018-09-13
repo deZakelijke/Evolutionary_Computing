@@ -5,6 +5,9 @@ import model.Individual;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * kills some random individuals untill fixed population
+ */
 public class FixedPopulationRandomNaturalSelection implements NaturalSelectionInterface
 
 
