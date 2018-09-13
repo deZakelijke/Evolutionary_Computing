@@ -30,13 +30,13 @@ public class BasicSexualSelection implements SexualSelectionInterface {
         int length = populationList.size();
         Random r = new Random();
 
-        if (length < this.nr_couples) return null;
+        if (length < this.nr_parents) return null;
 
-        for (int i = length - 1; i >= length - this.nr_couples; --i) {
+        for (int i = length - 1; i >= length - this.nr_parents; --i) {
             Collections.swap(populationList, i, r.nextInt(i + 1));
         }
 
-        return populationList.subList(length - this.nr_couples, length);
+        return populationList.subList(length - this.nr_parents, length);
 
         // Bereken totale fitness score, prob. voor selectie is f/Sf
         // Zorgt mestal voor te snelle convergence

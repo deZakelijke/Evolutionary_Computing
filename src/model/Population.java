@@ -131,6 +131,8 @@ public class Population {
             System.out.println("Record stats");
             reCalculateStats();
 
+            System.out.println(highestFitness);
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());

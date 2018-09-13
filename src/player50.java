@@ -66,8 +66,8 @@ public class player50 implements ContestSubmission  {
 		// note: vanwege dependencies maar geen json inlezen maar gewoon een map
 		Map<String, String> config  = new HashMap();
 
-		config.put(	TERMINATION, 		"evaluation_based");
-		config.put(	SEXUAL,				"empty");
+		config.put(	TERMINATION, 		"generation_based");
+		config.put(	SEXUAL,				"basic");
 		config.put(	NATURAL, 			"fixed_population_worst");
 		config.put(	RECOMBINATION, 		"one_point_random");
 		config.put(	MUTATION, 			"uniform");
@@ -96,7 +96,7 @@ public class player50 implements ContestSubmission  {
 		naturalSelectionMap.put("empty", new EmptyNaturalSelection());
 		naturalSelectionMap.put("basic", new BasicNaturalSelection());
 		naturalSelectionMap.put("fixed_population_random", new FixedPopulationRandomNaturalSelection(POPULATIONSIZE));
-		naturalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffNaturalSelection(POPULATIONSIZE-50));
+		naturalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffNaturalSelection(POPULATIONSIZE));
 
 		// terminators
 		terminatorMap.put("indefinite", new EmptyTerminator());
