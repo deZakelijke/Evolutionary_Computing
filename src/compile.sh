@@ -8,6 +8,8 @@ find -name "*.java" > ../sources.txt
 cd ..
 python compile.py
 
+
+
 # # old !!
 # # Compile step:
 # javac -cp .:contest.jar player50.java

@@ -91,6 +91,12 @@ public class Population {
 
         try {
 
+            // everyone is a (year?) older
+            System.out.println("Increasing age of everyone");
+            for (Individual individual : populationList) {
+                individual.ageOneYear();
+            }
+
             // selection for reproduction
             System.out.println("Selecting parents");
             List<Individual> parents = sexualSelection.select(populationList);
@@ -122,12 +128,6 @@ public class Population {
             System.out.println("Killing part of the population");
             naturalSelection.kill(populationList);
 
-            // everyone is a (year?) older
-            System.out.println("Increasing age of everyone");
-            for (Individual individual : populationList) {
-                individual.ageOneYear();
-            }
-
             // recalculate populationfitnessness
             System.out.println("Record stats");
             reCalculateStats();
@@ -149,53 +149,52 @@ public class Population {
 
         populationList.sort(Comparator.comparing(Individual::getFitness));
 
-        String een = "";
-
-        for (Individual individual : populationList) {
-            een = een + "(" + String.valueOf(individual.getFitness()).substring(0, 4)  + ", " + String.valueOf(individual.getAge()) + "),\t";
-        }
-
-        System.out.println(een);
-
-//        double max = -60000000000000.0;
-//        double min = 600000000000000.0;
-//        double total = 0.0;
-//        double[] genomeSum = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+//        String een = "";
 //
 //        for (Individual individual : populationList) {
-//            double fitness = individual.getFitness();
-//            double[] genome = individual.getGenome().getGenome();
-//            if (fitness > max) {
-//                max = fitness;
-//            }
-//            if (fitness < min) {
-//                min = fitness;
-//            }
-//            total += fitness;
-//            int i = 0;
-//            for (double gen : genome) {
-//                genomeSum[i] += gen;
-//                i++;
-//            }
+//            een = een + "(" + String.valueOf(individual.getFitness()).substring(0, 4)  + ", " + String.valueOf(individual.getAge()) + "),\t";
 //        }
 //
-//        double sumStDevs = 0;
-//        int i = 0;
-//        for (double v : genomeSum) {
-//            averageGenomes[i] = v/((double) populationSize);
-//            sumStDevs += v/((double) populationSize);
-//            i++;
-//        }
-//        averageOfAverageGenomes = sumStDevs/10.0;
-//
-//        averageFitness = total/ ((double) populationSize);
-//
-//        highestFitness = max;
-//        lowestFitness = min;
-//
-//        //todo: afmaken
-//        stdevFitness = 404.0;
+//        System.out.println(een);
 
+        double max = -60000000000000.0;
+        double min = 600000000000000.0;
+        double total = 0.0;
+        double[] genomeSum = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+
+        for (Individual individual : populationList) {
+            double fitness = individual.getFitness();
+            double[] genome = individual.getGenome().getGenome();
+            if (fitness > max) {
+                max = fitness;
+            }
+            if (fitness < min) {
+                min = fitness;
+            }
+            total += fitness;
+            int i = 0;
+            for (double gen : genome) {
+                genomeSum[i] += gen;
+                i++;
+            }
+        }
+
+        double sumStDevs = 0;
+        int i = 0;
+        for (double v : genomeSum) {
+            averageGenomes[i] = v/((double) populationSize);
+            sumStDevs += v/((double) populationSize);
+            i++;
+        }
+        averageOfAverageGenomes = sumStDevs/10.0;
+
+        averageFitness = total/ ((double) populationSize);
+
+        highestFitness = max;
+        lowestFitness = min;
+
+        //todo: afmaken
+        stdevFitness = 404.0;
 
     }
 
