@@ -10,6 +10,7 @@ import model.terminator.Terminator;
 import org.vu.contest.ContestEvaluation;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -146,44 +147,54 @@ public class Population {
      */
     private void reCalculateStats() {
 
-        double max = -6.0;
-        double min = 6.0;
-        double total = 0.0;
-        double[] genomeSum = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+        populationList.sort(Comparator.comparing(Individual::getFitness));
+
+        String een = "";
 
         for (Individual individual : populationList) {
-            double fitness = individual.getFitness();
-            double[] genome = individual.getGenome().getGenome();
-            if (fitness > max) {
-                max = fitness;
-            }
-            if (fitness < min) {
-                min = fitness;
-            }
-            total += fitness;
-            int i = 0;
-            for (double gen : genome) {
-                genomeSum[i] += gen;
-                i++;
-            }
+            een = een + "(" + String.valueOf(individual.getFitness()).substring(0, 4)  + ", " + String.valueOf(individual.getAge()) + "),\t";
         }
 
-        double sumStDevs = 0;
-        int i = 0;
-        for (double v : genomeSum) {
-            averageGenomes[i] = v/((double) populationSize);
-            sumStDevs += v/((double) populationSize);
-            i++;
-        }
-        averageOfAverageGenomes = sumStDevs/10.0;
+        System.out.println(een);
 
-        averageFitness = total/ ((double) populationSize);
-
-        highestFitness = max;
-        lowestFitness = min;
-
-        //todo: afmaken
-        stdevFitness = 404.0;
+//        double max = -60000000000000.0;
+//        double min = 600000000000000.0;
+//        double total = 0.0;
+//        double[] genomeSum = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+//
+//        for (Individual individual : populationList) {
+//            double fitness = individual.getFitness();
+//            double[] genome = individual.getGenome().getGenome();
+//            if (fitness > max) {
+//                max = fitness;
+//            }
+//            if (fitness < min) {
+//                min = fitness;
+//            }
+//            total += fitness;
+//            int i = 0;
+//            for (double gen : genome) {
+//                genomeSum[i] += gen;
+//                i++;
+//            }
+//        }
+//
+//        double sumStDevs = 0;
+//        int i = 0;
+//        for (double v : genomeSum) {
+//            averageGenomes[i] = v/((double) populationSize);
+//            sumStDevs += v/((double) populationSize);
+//            i++;
+//        }
+//        averageOfAverageGenomes = sumStDevs/10.0;
+//
+//        averageFitness = total/ ((double) populationSize);
+//
+//        highestFitness = max;
+//        lowestFitness = min;
+//
+//        //todo: afmaken
+//        stdevFitness = 404.0;
 
 
     }
