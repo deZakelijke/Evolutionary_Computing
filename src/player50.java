@@ -70,9 +70,9 @@ public class player50 implements ContestSubmission  {
 
 		config.put(	TERMINATION, 		"generation_based");
 		config.put(	SEXUAL,				"empty");
-		config.put(	NATURAL, 			"empty");
+		config.put(	NATURAL, 			"fixed_population_random");
 		config.put(	RECOMBINATION, 		"empty");
-		config.put(	MUTATION, 			"empty");
+		config.put(	MUTATION, 			"uniform");
 
 		// determines wether run will be logged
 		LOG = true;
