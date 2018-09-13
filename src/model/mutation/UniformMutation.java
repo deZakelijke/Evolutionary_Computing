@@ -28,6 +28,12 @@ public class UniformMutation implements MutationInterface {
             genome_array = new double[genome_size];
             for (int j = 0; j < genome_size; j++) {
                 genome_array[j] = r.nextDouble() * (max - min) + max;
+                if (genome_array[j] > 5.0) {
+                    genome_array[j] = 5.0;
+                } else if (genome_array[j] < -5.0) {
+                    genome_array[j] = -5.0;
+                }
+
             }
             mutated_genome.setGenome(genome_array);
         }

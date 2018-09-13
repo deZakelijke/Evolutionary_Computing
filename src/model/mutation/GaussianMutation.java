@@ -31,6 +31,11 @@ public class GaussianMutation implements MutationInterface {
 
             for (int j = 0; j < genome_size; j++) {
                 genome_array[j] += r.nextGaussian(); // Can be done with mean and variance
+                if (genome_array[j] > 5.0) {
+                    genome_array[j] = 5.0;
+                } else if (genome_array[j] < -5.0) {
+                    genome_array[j] = -5.0;
+                }
             }
             mutated_genome.setGenome(genome_array);
         }

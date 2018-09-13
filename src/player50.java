@@ -105,7 +105,7 @@ public class player50 implements ContestSubmission  {
 
 		// sexual selections
 		sexualSelectionMap.put("empty", new EmptySexualSelection());
-		sexualSelectionMap.put("basic", new BasicSexualSelection());
+		sexualSelectionMap.put("basic", new BasicSexualSelection(20, 1));
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
