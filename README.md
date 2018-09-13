@@ -10,7 +10,7 @@ Repository for the optimisation assignment
 
 
 
-
+todo: bijwerken
 ### Compilation and testing commands from the tutorial
 #### Compile
 javac -cp .:contest.jar player50.java  
