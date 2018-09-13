@@ -5,6 +5,7 @@ import model.mutation.MutationInterface;
 import model.mutation.UniformMutation;
 import model.natural_selection.BasicNaturalSelection;
 import model.natural_selection.EmptyNaturalSelection;
+import model.natural_selection.FixedPopulationRandomNaturalSelection;
 import model.natural_selection.NaturalSelectionInterface;
 import model.recombination.BasicRecombination;
 import model.recombination.EmptyRecombination;
@@ -74,7 +75,7 @@ public class player50 implements ContestSubmission  {
 		config.put(	MUTATION, 			"empty");
 
 		// determines wether run will be logged
-		LOG = false;
+		LOG = true;
 
 		return config;
 	}
@@ -96,6 +97,7 @@ public class player50 implements ContestSubmission  {
 		// natural selections
 		naturalSelectionMap.put("empty", new EmptyNaturalSelection());
 		naturalSelectionMap.put("basic", new BasicNaturalSelection());
+		naturalSelectionMap.put("fixed_population_random", new FixedPopulationRandomNaturalSelection(POPULATIONSIZE));
 
 		// terminators
 		terminatorMap.put("indefinite", new EmptyTerminator());
@@ -106,10 +108,12 @@ public class player50 implements ContestSubmission  {
 		// sexual selections
 		sexualSelectionMap.put("empty", new EmptySexualSelection());
 		sexualSelectionMap.put("basic", new BasicSexualSelection());
+//		sexualSelectionMap.put("test", new TestSexualSelection());
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
 		recombinationMap.put("basic", new BasicRecombination());
+//		recombinationMap.put("test", new TestRecombination());
 
 	}
 
