@@ -1,8 +1,6 @@
 package model.terminator;
 
 import model.Population;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 /**
  *  runs untill evaluations are out
  */

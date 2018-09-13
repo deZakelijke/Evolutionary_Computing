@@ -1,8 +1,6 @@
 package model.sexual_selection;
 
 import model.Individual;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
 import java.util.List;
 
