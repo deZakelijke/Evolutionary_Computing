@@ -73,7 +73,7 @@ public class player50 implements ContestSubmission  {
 		config.put(	MUTATION, 			"gaussian");
 
 		// determines wether run will be logged
-		LOG = true;
+		LOG = false;
 
 		return config;
 	}

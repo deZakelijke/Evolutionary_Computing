@@ -32,7 +32,7 @@ os.system(line1)
 stringBuilder2 = stringBuilder.replace(".java", ".class").replace("\n", " ").replace("./model", "model")
 
 # jar all
-line2 = "jar cmf MainClass.txt submission.jar player50.class BentCigarFunction.class {}".format(stringBuilder2)
+line2 = "jar cmf MainClass.txt submission.jar player50.class {}".format(stringBuilder2)
 
 
 
