@@ -83,15 +83,15 @@ public class Statistic {
 
     @Override
     public String toString() {
-        return "Statistic{" +
-                "lowestFitness=" + lowestFitness +
-                ", highestFitness=" + highestFitness +
-                ", averageFitness=" + averageFitness +
-                ", populationSize=" + populationSize +
-                ", stdevFitness=" + stdevFitness +
+        return "{ " +
+                " \"lowestFitness\": " + lowestFitness +
+                ", \"highestFitness\": " + highestFitness +
+                ", \"averageFitness\": " + averageFitness +
+                ", \"populationSize\": " + populationSize +
+                ", \"stdevFitness\": " + stdevFitness +
 
-                ", averageOfStDevGenomes=" + averageOfStDevGenomes +
-                ", stdevGenomes=" + Arrays.toString(stdevGenomes) +
-                '}';
+                ", \"averageOfStDevGenomes\": " + averageOfStDevGenomes +
+                ", \"stdevGenomes\": " + Arrays.toString(stdevGenomes) +
+                " }";
     }
 }
