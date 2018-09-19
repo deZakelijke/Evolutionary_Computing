@@ -45,8 +45,6 @@ public class GenoType {
         genome = new double[size];
 
         for (int i = 0; i < size; i++) {
-
-            // todo: moet dit tussen 5 en -5 of -0.5 en 0.5? nu= [-5 en 5]
             genome[i] = (rnd_.nextDouble()-0.5)*10.0;
         }
         return genome;

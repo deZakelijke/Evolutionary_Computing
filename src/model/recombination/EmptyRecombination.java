@@ -9,7 +9,7 @@ public class EmptyRecombination implements Recombination {
 
 
     @Override
-    public List<Individual> reproduce(List<Individual> selectedForReproduction) {
+    public List<Individual> reproduce(List<Individual[]> selectedForReproduction) {
         List<Individual> empty = new ArrayList<>();
         return empty;
     }

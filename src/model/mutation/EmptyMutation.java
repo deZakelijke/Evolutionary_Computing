@@ -12,8 +12,8 @@ public class EmptyMutation implements Mutation {
     }
 
     @Override
-    public List<Individual> doMutation(List<Individual> children) {
-        return children;
+    public void doMutation(List<Individual> children) {
+        return;
     }
 
     public double getMutationRate() {

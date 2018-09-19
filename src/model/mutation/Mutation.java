@@ -18,5 +18,5 @@ public interface Mutation {
      * @param children
      * @return
      */
-    List<Individual> doMutation(List<Individual> children);
+    void doMutation(List<Individual> children);
 }

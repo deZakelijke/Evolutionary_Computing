@@ -1,6 +1,7 @@
 package model.sexual_selection;
 
 import model.Individual;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.Collections;
@@ -23,7 +24,7 @@ public class UniformParentSelection extends EmptyParentSelection implements Pare
      * Select parents uniform random, no weighting.
      */
     @Override
-    public List<Individual> select(List<Individual> populationList) {
+    public List<Individual[]> select(List<Individual> populationList) {
         int length = populationList.size();
         Random r = new Random();
 
@@ -33,7 +34,13 @@ public class UniformParentSelection extends EmptyParentSelection implements Pare
             Collections.swap(populationList, i, r.nextInt(i + 1));
         }
 
-        return populationList.subList(length - getNr_parents(), length);
+
+
+        //todo: per couple een Individual[] maken van twee ouders zodat we weten welke bij elkaar horen
+
+        throw new NotImplementedException();
+
+//        return populationList.subList(length - getNr_parents(), length);
 
         // Bereken totale fitness score, prob. voor selectie is f/Sf
         // Zorgt mestal voor te snelle convergence

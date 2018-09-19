@@ -16,7 +16,7 @@ public interface ParentSelection {
      * returns a list of parents
      *
      * @param populationList
-     * @return
+     * @return list of couples
      */
-    List<Individual> select(List<Individual> populationList);
+    List<Individual[]> select(List<Individual> populationList);
 }

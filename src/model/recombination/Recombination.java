@@ -16,7 +16,7 @@ public interface Recombination {
      * takes in parents and outputs children
      *
      * @param selectedForReproduction
-     * @return
+     * @return children
      */
-    List<Individual> reproduce(List<Individual> selectedForReproduction);
+    List<Individual> reproduce(List<Individual[]> selectedForReproduction);
 }

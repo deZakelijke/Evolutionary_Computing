@@ -16,8 +16,8 @@ public class EmptyParentSelection implements ParentSelection {
     }
 
     @Override
-    public List<Individual> select(List<Individual> populationList) {
-        List<Individual> empty = new ArrayList<>();
+    public List<Individual[]> select(List<Individual> populationList) {
+        List<Individual[]> empty = new ArrayList<>();
         return empty;
     }
 

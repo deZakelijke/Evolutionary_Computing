@@ -4,7 +4,7 @@ import model.Individual;
 import java.util.List;
 
 /**
- * does nothing
+ * does not kill anything
   */
 public class EmptySurvivalSelection implements SurvivalSelection {
 

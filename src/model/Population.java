@@ -99,7 +99,7 @@ public class Population {
 
             // selection for reproduction
             System.out.println("Selecting parents");
-            List<Individual> parents = parentSelection.select(populationList);
+            List<Individual[]> parents = parentSelection.select(populationList);
             System.out.println(String.format("parents selected: %d", parents.size()));
 
             // recombination
@@ -109,7 +109,7 @@ public class Population {
 
             // mutation
             System.out.println("Mutating children");
-            children = mutation.doMutation(children);
+            mutation.doMutation(children);
 
             // reevaluate
             System.out.println("Evaluating children");

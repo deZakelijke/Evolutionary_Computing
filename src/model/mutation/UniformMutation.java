@@ -21,7 +21,7 @@ public class UniformMutation extends EmptyMutation implements Mutation {
      * todo: fixen en mutationrate meenemen
      */
     @Override
-    public List<Individual> doMutation(List<Individual> children) {
+    public void doMutation(List<Individual> children) {
         int nr_children = children.size();
         int genome_size;
         GenoType mutated_genome;
@@ -46,6 +46,5 @@ public class UniformMutation extends EmptyMutation implements Mutation {
             mutated_genome.setGenome(genome_array);
         }
 
-        return children;
     }
 }
