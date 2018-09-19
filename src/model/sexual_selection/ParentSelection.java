@@ -10,7 +10,7 @@ import java.util.List;
  *
  * every sexual selection object should have at least one function select that defines which parents of a population get to mate
  */
-public interface SexualSelectionInterface {
+public interface ParentSelection {
 
     /**
      * returns a list of parents

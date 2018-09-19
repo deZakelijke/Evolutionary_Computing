@@ -6,11 +6,11 @@ import java.util.List;
 /**
  * does nothing
   */
-public class EmptyNaturalSelection implements NaturalSelectionInterface{
+public class EmptySurvivalSelection implements SurvivalSelection {
 
     private int populationsize;
 
-    public EmptyNaturalSelection(int populationsize) {
+    public EmptySurvivalSelection(int populationsize) {
         this.populationsize = populationsize;
     }
 

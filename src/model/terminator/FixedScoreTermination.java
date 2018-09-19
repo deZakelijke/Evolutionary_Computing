@@ -5,11 +5,11 @@ import model.Population;
 /**
  * runs untill fixed number of generations is reached
  */
-public class FixedScoreTerminator extends EmptyTerminator implements Terminator {
+public class FixedScoreTermination extends EmptyTermination implements TerminationContext {
 
     private double score = 0;
 
-    public FixedScoreTerminator(double desiredScore) {
+    public FixedScoreTermination(double desiredScore) {
         setScore(desiredScore);
     }
 
@@ -25,7 +25,7 @@ public class FixedScoreTerminator extends EmptyTerminator implements Terminator 
 
     @Override
     public String toString() {
-        return "FixedScoreTerminator{" +
+        return "FixedScoreTermination{" +
                 "score=" + score +
                 '}';
     }

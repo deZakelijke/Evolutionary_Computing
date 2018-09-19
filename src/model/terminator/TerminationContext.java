@@ -5,7 +5,7 @@ import model.Population;
 /**
  * context object that needs to keep track of the evaluations
  */
-public interface Terminator {
+public interface TerminationContext {
 
     /**
      * determines whether EA is done.

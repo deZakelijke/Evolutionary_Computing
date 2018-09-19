@@ -2,11 +2,11 @@ package model.mutation;
 
 import model.Individual;
 import java.util.Random;
-import model.Genome;
+import model.GenoType;
 
 import java.util.List;
 
-public class GaussianMutation extends EmptyMutation implements MutationInterface {
+public class GaussianMutation extends EmptyMutation implements Mutation {
 
     public GaussianMutation(double mutationRate) {
         super(mutationRate);
@@ -26,12 +26,12 @@ public class GaussianMutation extends EmptyMutation implements MutationInterface
     public List<Individual> doMutation(List<Individual> children) {
         int nr_children = children.size();
         int genome_size;
-        Genome mutated_genome;
+        GenoType mutated_genome;
         double genome_array[];
         Random r = new Random();
 
         for (int i = 0; i < nr_children; i++) {
-            mutated_genome = children.get(i).getGenome();
+            mutated_genome = children.get(i).getGenoType();
             genome_size = mutated_genome.getSize();
             genome_array = mutated_genome.getGenome();
 

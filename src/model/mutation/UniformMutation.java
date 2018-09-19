@@ -1,7 +1,7 @@
 package model.mutation;
 
 import model.Individual;
-import model.Genome;
+import model.GenoType;
 
 import java.util.Random;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 /***
  * =broken
  */
-public class UniformMutation extends EmptyMutation implements MutationInterface {
+public class UniformMutation extends EmptyMutation implements Mutation {
 
     public UniformMutation(double mutationRate) {
         super(mutationRate);
@@ -24,14 +24,14 @@ public class UniformMutation extends EmptyMutation implements MutationInterface 
     public List<Individual> doMutation(List<Individual> children) {
         int nr_children = children.size();
         int genome_size;
-        Genome mutated_genome;
+        GenoType mutated_genome;
         double genome_array[];
         double min = -5.0;
         double max = 5.0;
         Random r = new Random();
 
         for (int i = 0; i < nr_children; i++) {
-            mutated_genome = children.get(i).getGenome();
+            mutated_genome = children.get(i).getGenoType();
             genome_size = mutated_genome.getSize();
             genome_array = new double[genome_size];
             for (int j = 0; j < genome_size; j++) {

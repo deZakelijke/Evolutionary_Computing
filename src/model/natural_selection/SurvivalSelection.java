@@ -10,7 +10,7 @@ import java.util.List;
  *
  * every natural selection object should have at least one function kill that defines how the population is trimmed down
  */
-public interface NaturalSelectionInterface {
+public interface SurvivalSelection {
 
     /**
      * removes a number of individuals from population

@@ -1,12 +1,12 @@
 package model;
 
 
-import model.mutation.MutationInterface;
-import model.natural_selection.NaturalSelectionInterface;
-import model.recombination.RecombinationInterface;
-import model.sexual_selection.SexualSelectionInterface;
+import model.mutation.Mutation;
+import model.natural_selection.SurvivalSelection;
+import model.recombination.Recombination;
+import model.sexual_selection.ParentSelection;
 import model.stats.Statistic;
-import model.terminator.Terminator;
+import model.terminator.TerminationContext;
 import org.vu.contest.ContestEvaluation;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class Population {
      * @param evaluator
      * @param terminator
      */
-    public Population(int sizePopulation, int sizeGenomes, ContestEvaluation evaluator, Terminator terminator) {
+    public Population(int sizePopulation, int sizeGenomes, ContestEvaluation evaluator, TerminationContext terminator) {
 
         // build new
         setPopulationList(createNewPopulation(sizePopulation, sizeGenomes));
@@ -55,7 +55,7 @@ public class Population {
 
         // evaluate first, EA Fase: evaluate initial population
         for (Individual initialIndividual : populationList) {
-            initialIndividual.setFitness((double) evaluator.evaluate(initialIndividual.getGenome().getGenome()));
+            initialIndividual.setFitness((double) evaluator.evaluate(initialIndividual.getGenoType().getGenome()));
             terminator.addEvaluation();
         }
         reCalculateStats();
@@ -72,7 +72,7 @@ public class Population {
     private List<Individual> createNewPopulation(int sizePopulation, int sizeGenomes) {
         List<Individual> newPopulation = new ArrayList<>(sizePopulation);
         for (int i = 0; i < sizePopulation; i++) {
-            newPopulation.add(new Individual(new Genome(sizeGenomes)));
+            newPopulation.add(new Individual(new GenoType(sizeGenomes)));
         }
         return newPopulation;
     }
@@ -83,11 +83,11 @@ public class Population {
      * @param evaluator fitness evaluation
      * @param mutation implementation
      * @param recombination implementation
-     * @param naturalSelection (selecting for next generation) implementation
-     * @param sexualSelection (selecting parents) implementation
-     * @param terminator = context object which holds termination condition and nr of evaluations
+     * @param survivalSelection (selecting for next generation) implementation
+     * @param parentSelection (selecting parents) implementation
+     * @param terminatorContext = context object which holds termination condition and nr of evaluations
      */
-    public void runGeneration(ContestEvaluation evaluator, MutationInterface mutation, RecombinationInterface recombination, NaturalSelectionInterface naturalSelection, SexualSelectionInterface sexualSelection, Terminator terminator) {
+    public void runGeneration(ContestEvaluation evaluator, Mutation mutation, Recombination recombination, SurvivalSelection survivalSelection, ParentSelection parentSelection, TerminationContext terminatorContext) {
 
         try {
 
@@ -99,7 +99,7 @@ public class Population {
 
             // selection for reproduction
             System.out.println("Selecting parents");
-            List<Individual> parents = sexualSelection.select(populationList);
+            List<Individual> parents = parentSelection.select(populationList);
             System.out.println(String.format("parents selected: %d", parents.size()));
 
             // recombination
@@ -114,8 +114,8 @@ public class Population {
             // reevaluate
             System.out.println("Evaluating children");
             for (Individual child : children) {
-                child.setFitness((double) evaluator.evaluate(child.getGenome().getGenome()));
-                terminator.addEvaluation();
+                child.setFitness((double) evaluator.evaluate(child.getGenoType().getGenome()));
+                terminatorContext.addEvaluation();
             }
 
             // add newbournes to population
@@ -126,7 +126,7 @@ public class Population {
 
             // natural selection
             System.out.println("Killing part of the population");
-            naturalSelection.kill(populationList);
+            survivalSelection.kill(populationList);
 
             // recalculate populationfitnessness
             System.out.println("Record stats");
@@ -164,7 +164,7 @@ public class Population {
 
         for (Individual individual : populationList) {
             double fitness = individual.getFitness();
-            double[] genome = individual.getGenome().getGenome();
+            double[] genome = individual.getGenoType().getGenome();
             if (fitness > max) {
                 max = fitness;
             }

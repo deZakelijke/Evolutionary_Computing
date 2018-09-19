@@ -4,11 +4,11 @@ import model.Population;
 /**
  *  runs untill evaluations are out
  */
-public class EvaluationsExhaustedTerminator extends EmptyTerminator implements Terminator {
+public class EvaluationsExhaustedTermination extends EmptyTermination implements TerminationContext {
 
     private int maxEvaluations;
 
-    public EvaluationsExhaustedTerminator(int evaluations_limit_) {
+    public EvaluationsExhaustedTermination(int evaluations_limit_) {
         setMaxEvaluations(evaluations_limit_);
     }
 
@@ -23,7 +23,7 @@ public class EvaluationsExhaustedTerminator extends EmptyTerminator implements T
 
     @Override
     public String toString() {
-        return "EvaluationsExhaustedTerminator{" +
+        return "EvaluationsExhaustedTermination{" +
                 "maxEvaluations=" + maxEvaluations +
                 ", doneEvaluations=" + getDoneEvaluations() +
                 '}';

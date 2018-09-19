@@ -2,22 +2,18 @@ package model;
 
 import java.util.Random;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 /**
  * Genotype class
  * holds a gene-array and its size
  */
-public class Genome {
+public class GenoType {
 
     private Random rnd_ = new Random();
 
     private double[] genome;
     private int size = 0;
 
-    public double[] onePointCrossover(int index, Genome partnersDNA) {
+    public double[] onePointCrossover(int index, GenoType partnersDNA) {
         double[] newGenome = new double[size];
         for (int i = 0; i < genome.length-1; i++) {
             double[] target = i < index ? genome : partnersDNA.getGenome();
@@ -27,12 +23,12 @@ public class Genome {
     }
 
 
-    public Genome(double[] genome) {
+    public GenoType(double[] genome) {
         setGenome(genome);
         setSize(genome.length);
     }
 
-    public Genome(int size) {
+    public GenoType(int size) {
         setGenome(createRandom(size));
         setSize(size);
     }

@@ -10,7 +10,7 @@ import java.util.List;
  *
  * every recombination object should have at least one function reproduce that defines how parents are combined into new individuals
  */
-public interface RecombinationInterface {
+public interface Recombination {
 
     /**
      * takes in parents and outputs children

@@ -29,7 +29,7 @@ Als ik nu basis functionaliteit van bijv de functie addgeneration wil aanpassen 
 Zo kom je ook nooit op een methodnotfoundexception.
 
 in player50.java zit de complete EA structuur zoals gedefineerd in het boek (dat stuk pseudocode), in population.java zit vervolgens de loop uit die structuur.
-individual en genome zijn gewoon objectclasses om data bij te houden voor fenotype en genotype respectievelijk.
+individual en genoType zijn gewoon objectclasses om data bij te houden voor fenotype en genotype respectievelijk.
 Momenteel is ons genotype nog identiek aan fenotype maar als we dat willen aanpassen dan kan dat zo gemakkelijk
 
 Wat kan je aanpassen? alles! Zorg alleen dat alle methoden die in de interface staan ook geimplementeerd en ge@override zijn. 

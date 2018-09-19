@@ -5,11 +5,11 @@ import model.Population;
 /**
  * runs untill fixed number of generations is reached
  */
-public class FixedGenerationsTerminator extends EmptyTerminator implements Terminator {
+public class FixedGenerationsTermination extends EmptyTermination implements TerminationContext {
 
     private int maxGenerations = 0;
 
-    public FixedGenerationsTerminator(int numberOfGenerations) {
+    public FixedGenerationsTermination(int numberOfGenerations) {
         setMaxGenerations(numberOfGenerations);
     }
 
@@ -25,7 +25,7 @@ public class FixedGenerationsTerminator extends EmptyTerminator implements Termi
 
     @Override
     public String toString() {
-        return "FixedGenerationsTerminator{" +
+        return "FixedGenerationsTermination{" +
                 "maxGenerations=" + maxGenerations +
                 ", doneEvaluations=" + getDoneEvaluations() +
                 ", generations=" + getGenerations() +

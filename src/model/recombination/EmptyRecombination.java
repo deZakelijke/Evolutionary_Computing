@@ -4,7 +4,7 @@ import model.Individual;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmptyRecombination implements RecombinationInterface {
+public class EmptyRecombination implements Recombination {
 
 
 

@@ -1,15 +1,15 @@
 import model.Population;
 import model.mutation.GaussianMutation;
 import model.mutation.EmptyMutation;
-import model.mutation.MutationInterface;
+import model.mutation.Mutation;
 import model.mutation.UniformMutation;
 import model.natural_selection.*;
 import model.recombination.EmptyRecombination;
 import model.recombination.OnePointRandomRecombination;
-import model.recombination.RecombinationInterface;
-import model.sexual_selection.BasicSexualSelection;
-import model.sexual_selection.EmptySexualSelection;
-import model.sexual_selection.SexualSelectionInterface;
+import model.recombination.Recombination;
+import model.sexual_selection.UniformParentSelection;
+import model.sexual_selection.EmptyParentSelection;
+import model.sexual_selection.ParentSelection;
 import model.stats.Statistics;
 import model.terminator.*;
 import org.vu.contest.ContestSubmission;
@@ -39,11 +39,11 @@ public class player50 implements ContestSubmission  {
 
 	private boolean LOG;
 
-    private Map<String, MutationInterface> mutationMap = new HashMap<>();
-	private Map<String, NaturalSelectionInterface> naturalSelectionMap = new HashMap<>();
-	private Map<String, SexualSelectionInterface> sexualSelectionMap = new HashMap<>();
-	private Map<String, RecombinationInterface> recombinationMap = new HashMap<>();
-	private Map<String, Terminator> terminatorMap = new HashMap<>();
+    private Map<String, Mutation> mutationMap = new HashMap<>();
+	private Map<String, SurvivalSelection> naturalSelectionMap = new HashMap<>();
+	private Map<String, ParentSelection> sexualSelectionMap = new HashMap<>();
+	private Map<String, Recombination> recombinationMap = new HashMap<>();
+	private Map<String, TerminationContext> terminatorMap = new HashMap<>();
 	
 	public player50()
 	{
@@ -109,19 +109,19 @@ public class player50 implements ContestSubmission  {
 		mutationMap.put("gaussian", new GaussianMutation(MUTATIONRATE));
 
 		// natural selections
-		naturalSelectionMap.put("empty", new EmptyNaturalSelection(POPULATIONSIZE));
-		naturalSelectionMap.put("fixed_population_random", new FixedPopulationRandomNaturalSelection(POPULATIONSIZE));
-		naturalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffNaturalSelection(POPULATIONSIZE));
+		naturalSelectionMap.put("empty", new EmptySurvivalSelection(POPULATIONSIZE));
+		naturalSelectionMap.put("fixed_population_random", new FixedPopulationRandomSurvivalSelection(POPULATIONSIZE));
+		naturalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffSurvivalSelection(POPULATIONSIZE));
 
 		// terminators
-		terminatorMap.put("indefinite", new EmptyTerminator());
-		terminatorMap.put("evaluation_based", new EvaluationsExhaustedTerminator(evaluations_limit_));
-		terminatorMap.put("generation_based", new FixedGenerationsTerminator(GENERATION_TERMINATION));
-		terminatorMap.put("score_based", new FixedScoreTerminator(SCORE_TERMINATION));
+		terminatorMap.put("indefinite", new EmptyTermination());
+		terminatorMap.put("evaluation_based", new EvaluationsExhaustedTermination(evaluations_limit_));
+		terminatorMap.put("generation_based", new FixedGenerationsTermination(GENERATION_TERMINATION));
+		terminatorMap.put("score_based", new FixedScoreTermination(SCORE_TERMINATION));
 
 		// sexual selections
-		sexualSelectionMap.put("empty", new EmptySexualSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
-		sexualSelectionMap.put("basic", new BasicSexualSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		sexualSelectionMap.put("empty", new EmptyParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		sexualSelectionMap.put("basic", new UniformParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
@@ -173,11 +173,11 @@ public class player50 implements ContestSubmission  {
 			System.out.println("Configuration:\n" + config.toString());
 
 			// init configuration
-			Terminator terminator = terminatorMap.get(config.get(TERMINATION));
-			SexualSelectionInterface sexual = sexualSelectionMap.get(config.get(SEXUAL));
-			NaturalSelectionInterface natural = naturalSelectionMap.get(config.get(NATURAL));
-			RecombinationInterface recomb = recombinationMap.get(config.get(RECOMBINATION));
-			MutationInterface mutation = mutationMap.get(config.get(MUTATION));
+			TerminationContext terminator = terminatorMap.get(config.get(TERMINATION));
+			ParentSelection sexual = sexualSelectionMap.get(config.get(SEXUAL));
+			SurvivalSelection natural = naturalSelectionMap.get(config.get(NATURAL));
+			Recombination recomb = recombinationMap.get(config.get(RECOMBINATION));
+			Mutation mutation = mutationMap.get(config.get(MUTATION));
 
 			// init population
 			Population population = new Population(POPULATIONSIZE, GENOMESIZE, evaluation_, terminator);

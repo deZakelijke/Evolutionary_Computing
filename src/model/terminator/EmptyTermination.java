@@ -5,12 +5,12 @@ import model.Population;
 /**
  * runs indefinitly
  */
-public class EmptyTerminator implements Terminator {
+public class EmptyTermination implements TerminationContext {
 
     private int doneEvaluations =0;
     private int generations = 0;
 
-    public EmptyTerminator() {
+    public EmptyTermination() {
     }
 
     @Override

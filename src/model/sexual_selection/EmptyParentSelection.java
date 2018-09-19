@@ -4,13 +4,13 @@ import model.Individual;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmptySexualSelection implements SexualSelectionInterface {
+public class EmptyParentSelection implements ParentSelection {
 
     private int nr_parents;
 
     private int nr_couples;
 
-    public EmptySexualSelection(int nr_parents, int nr_couples) {
+    public EmptyParentSelection(int nr_parents, int nr_couples) {
         this.nr_parents = nr_parents;
         this.nr_couples = nr_couples;
     }

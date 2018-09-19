@@ -1,13 +1,12 @@
 package model.sexual_selection;
 
 import model.Individual;
-import model.terminator.EmptyTerminator;
 
 import java.util.List;
 import java.util.Collections;
 import java.util.Random;
 
-public class BasicSexualSelection extends EmptySexualSelection implements SexualSelectionInterface {
+public class UniformParentSelection extends EmptyParentSelection implements ParentSelection {
 
 
     /**
@@ -16,7 +15,7 @@ public class BasicSexualSelection extends EmptySexualSelection implements Sexual
      * @param nr_parents
      * @param nr_couples
      */
-    public BasicSexualSelection(int nr_parents, int nr_couples) {
+    public UniformParentSelection(int nr_parents, int nr_couples) {
         super(nr_parents, nr_couples);
     }
 

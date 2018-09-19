@@ -3,7 +3,7 @@ package model.mutation;
 import model.Individual;
 import java.util.List;
 
-public class EmptyMutation implements MutationInterface {
+public class EmptyMutation implements Mutation {
 
     private double mutationRate;
 

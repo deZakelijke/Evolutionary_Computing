@@ -10,7 +10,7 @@ import java.util.List;
  *
  * every mutation object should have at least one function doMutation that defines how children are mutated
  */
-public interface MutationInterface {
+public interface Mutation {
 
     /**
      * edits genomes of kids and outputs same kids

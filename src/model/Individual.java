@@ -6,20 +6,20 @@ package model;
  */
 public class Individual {
 
-    private Genome genome;
+    private GenoType genoType;
     private double fitness;
     private int age;
 
-    public Individual(Genome genome) {
-        setGenome(genome);
+    public Individual(GenoType genoType) {
+        setGenoType(genoType);
     }
 
-    public Genome getGenome() {
-        return genome;
+    public GenoType getGenoType() {
+        return genoType;
     }
 
-    public void setGenome(Genome genome) {
-        this.genome = genome;
+    public void setGenoType(GenoType genoType) {
+        this.genoType = genoType;
     }
 
     public double getFitness() {

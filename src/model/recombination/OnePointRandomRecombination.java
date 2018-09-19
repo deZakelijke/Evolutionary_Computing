@@ -1,13 +1,13 @@
 package model.recombination;
 
-import model.Genome;
+import model.GenoType;
 import model.Individual;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class OnePointRandomRecombination implements RecombinationInterface {
+public class OnePointRandomRecombination implements Recombination {
 
     Random rand = new Random();
 
@@ -22,11 +22,11 @@ public class OnePointRandomRecombination implements RecombinationInterface {
             Individual dad = selectedForReproduction.get(i);
             Individual mom = selectedForReproduction.get(i + 1);
 
-            Genome dadGenome = dad.getGenome();
-            Genome momGenome = mom.getGenome();
+            GenoType dadGenome = dad.getGenoType();
+            GenoType momGenome = mom.getGenoType();
 
-            Genome kiddo_1 = new Genome(dadGenome.onePointCrossover(1+rand.nextInt(dadGenome.getSize()-2), momGenome));
-            Genome kiddo_2 = new Genome(momGenome.onePointCrossover(1+rand.nextInt(momGenome.getSize()-2), dadGenome));
+            GenoType kiddo_1 = new GenoType(dadGenome.onePointCrossover(1+rand.nextInt(dadGenome.getSize()-2), momGenome));
+            GenoType kiddo_2 = new GenoType(momGenome.onePointCrossover(1+rand.nextInt(momGenome.getSize()-2), dadGenome));
 
             kiddos.add(new Individual(kiddo_1));
             kiddos.add(new Individual(kiddo_2));
