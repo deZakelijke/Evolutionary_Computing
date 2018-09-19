@@ -14,7 +14,6 @@ import model.stats.Statistics;
 import model.termination.*;
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
-import java.awt.Toolkit;
 
 import java.util.*;
 
@@ -59,7 +58,7 @@ public class player50 implements ContestSubmission  {
 	}
 
 	/**
-	 * Determines tre configuration of EA that is to be used at next run
+	 * Determines the configuration of EA that is to be used at next run
 	 * @return configuration hashmap
 	 */
 	private Map getRunConfiguration() {
@@ -96,7 +95,7 @@ public class player50 implements ContestSubmission  {
 	}
 
 	/**
-	 * Holds information on
+	 * Holds information on possible configurations
 	 */
 	private void fillConfigurationMap() {
 
@@ -109,7 +108,7 @@ public class player50 implements ContestSubmission  {
 		mutationMap.put("uniform", new UniformMutation(MUTATIONRATE));
 		mutationMap.put("gaussian", new GaussianMutation(MUTATIONRATE));
 
-		// natural selections
+		// survival selections
 		survivalSelectionMap.put("empty", new EmptySurvivalSelection(POPULATIONSIZE));
 		survivalSelectionMap.put("fixed_population_random", new FixedPopulationRandomSurvivalSelection(POPULATIONSIZE));
 		survivalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffSurvivalSelection(POPULATIONSIZE));
@@ -120,9 +119,9 @@ public class player50 implements ContestSubmission  {
 		terminationContextMap.put("generation_based", new FixedGenerationsTermination(GENERATION_TERMINATION));
 		terminationContextMap.put("score_based", new FixedScoreTermination(SCORE_TERMINATION));
 
-		// sexual selections
+		// parent selections
 		parentSelectionMap.put("empty", new EmptyParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
-		parentSelectionMap.put("basic", new UniformParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		parentSelectionMap.put("uniform", new UniformParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
@@ -163,10 +162,11 @@ public class player50 implements ContestSubmission  {
 		long startTime = new Date().getTime();
 
 		// define what is to be tested
-		List<String> parentSchemes = Arrays.asList("", "");
-		List<String> recombinationSchemes = Arrays.asList("", "");
-		List<Integer> parents = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+		List<String> parentSchemes = Arrays.asList("uniform");
+		List<String> recombinationSchemes = Arrays.asList("empty");
+		List<Integer> parents = Arrays.asList(2);
 
+        getRunConfiguration();
 
 		// loop through nr of parents
 		for (Integer parent_nr : parents) {
@@ -197,10 +197,7 @@ public class player50 implements ContestSubmission  {
 
 		// notify user of termination experiments
 		System.out.println("DONE");
-		int numbeeps = 3;
-		for(int x=0;x<numbeeps;x++) {
-			Toolkit.getDefaultToolkit().beep();
-		}
+
 	}
 
 	/**

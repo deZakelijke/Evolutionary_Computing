@@ -7,46 +7,53 @@ import java.util.Arrays;
  */
 public class Statistic {
 
-    private double lowestFitness;
-    private double highestFitness;
-    private double averageFitness;
     private int populationSize;
+
+
+    //statistical
+    private double minFitness;
+    private double maxFitness;
+    private double averageFitness;
     private double stdevFitness;
+
+    private int maxAge;
+    private int minAge;
+    private double averageAge;
+    private double stdevAge;
+
     private double[] stdevGenomes;
-    private double averageOfStDevGenomes;
+    private double averageOfstdevGenomes;
 
-    public Statistic(double lowestFitness, double highestFitness, double averageFitness, int populationSize, double stdevFitness, double[] stdevGenomes, double averageOfStDevGenomes) {
-        this.lowestFitness = lowestFitness;
-        this.highestFitness = highestFitness;
-        this.averageFitness = averageFitness;
+
+    public Statistic(int populationSize, double minFitness, double maxFitness, double averageFitness, double stdevFitness, int maxAge, int minAge, double averageAge, double stdevAge, double[] stdevGenomes, double averageOfstdevGenomes) {
         this.populationSize = populationSize;
-        this.stdevFitness = stdevFitness;
-        this.stdevGenomes = stdevGenomes;
-        this.averageOfStDevGenomes = averageOfStDevGenomes;
-    }
-
-    public double getLowestFitness() {
-        return lowestFitness;
-    }
-
-    public void setLowestFitness(double lowestFitness) {
-        this.lowestFitness = lowestFitness;
-    }
-
-    public double getHighestFitness() {
-        return highestFitness;
-    }
-
-    public void setHighestFitness(double highestFitness) {
-        this.highestFitness = highestFitness;
-    }
-
-    public double getAverageFitness() {
-        return averageFitness;
-    }
-
-    public void setAverageFitness(double averageFitness) {
+        this.minFitness = minFitness;
+        this.maxFitness = maxFitness;
         this.averageFitness = averageFitness;
+        this.stdevFitness = stdevFitness;
+        this.maxAge = maxAge;
+        this.minAge = minAge;
+        this.averageAge = averageAge;
+        this.stdevAge = stdevAge;
+        this.stdevGenomes = stdevGenomes;
+        this.averageOfstdevGenomes = averageOfstdevGenomes;
+    }
+
+    @Override
+    public String toString() {
+        return "Statistic{" +
+                "populationSize=" + populationSize +
+                ", minFitness=" + minFitness +
+                ", maxFitness=" + maxFitness +
+                ", averageFitness=" + averageFitness +
+                ", stdevFitness=" + stdevFitness +
+                ", maxAge=" + maxAge +
+                ", minAge=" + minAge +
+                ", averageAge=" + averageAge +
+                ", stdevAge=" + stdevAge +
+                ", averageOfstdevGenomes=" + averageOfstdevGenomes +
+                ", stdevGenomes=" + Arrays.toString(stdevGenomes) +
+                '}';
     }
 
     public int getPopulationSize() {
@@ -57,12 +64,68 @@ public class Statistic {
         this.populationSize = populationSize;
     }
 
+    public double getMinFitness() {
+        return minFitness;
+    }
+
+    public void setMinFitness(double minFitness) {
+        this.minFitness = minFitness;
+    }
+
+    public double getMaxFitness() {
+        return maxFitness;
+    }
+
+    public void setMaxFitness(double maxFitness) {
+        this.maxFitness = maxFitness;
+    }
+
+    public double getAverageFitness() {
+        return averageFitness;
+    }
+
+    public void setAverageFitness(double averageFitness) {
+        this.averageFitness = averageFitness;
+    }
+
     public double getStdevFitness() {
         return stdevFitness;
     }
 
     public void setStdevFitness(double stdevFitness) {
         this.stdevFitness = stdevFitness;
+    }
+
+    public int getMaxAge() {
+        return maxAge;
+    }
+
+    public void setMaxAge(int maxAge) {
+        this.maxAge = maxAge;
+    }
+
+    public int getMinAge() {
+        return minAge;
+    }
+
+    public void setMinAge(int minAge) {
+        this.minAge = minAge;
+    }
+
+    public double getAverageAge() {
+        return averageAge;
+    }
+
+    public void setAverageAge(double averageAge) {
+        this.averageAge = averageAge;
+    }
+
+    public double getStdevAge() {
+        return stdevAge;
+    }
+
+    public void setStdevAge(double stdevAge) {
+        this.stdevAge = stdevAge;
     }
 
     public double[] getStdevGenomes() {
@@ -73,25 +136,11 @@ public class Statistic {
         this.stdevGenomes = stdevGenomes;
     }
 
-    public double getAverageOfStDevGenomes() {
-        return averageOfStDevGenomes;
+    public double getAverageOfstdevGenomes() {
+        return averageOfstdevGenomes;
     }
 
-    public void setAverageOfStDevGenomes(double averageOfStDevGenomes) {
-        this.averageOfStDevGenomes = averageOfStDevGenomes;
-    }
-
-    @Override
-    public String toString() {
-        return "{ " +
-                " \"lowestFitness\": " + lowestFitness +
-                ", \"highestFitness\": " + highestFitness +
-                ", \"averageFitness\": " + averageFitness +
-                ", \"populationSize\": " + populationSize +
-                ", \"stdevFitness\": " + stdevFitness +
-
-                ", \"averageOfStDevGenomes\": " + averageOfStDevGenomes +
-                ", \"stdevGenomes\": " + Arrays.toString(stdevGenomes) +
-                " }";
+    public void setAverageOfstdevGenomes(double averageOfstdevGenomes) {
+        this.averageOfstdevGenomes = averageOfstdevGenomes;
     }
 }

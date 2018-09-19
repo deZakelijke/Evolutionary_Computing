@@ -2,6 +2,7 @@ package model;
 
 
 import model.mutation.Mutation;
+import model.stats.StatisticUtil;
 import model.survival_selection.SurvivalSelection;
 import model.recombination.Recombination;
 import model.parent_selection.ParentSelection;
@@ -10,8 +11,8 @@ import model.termination.TerminationContext;
 import org.vu.contest.ContestEvaluation;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Population class,
@@ -21,21 +22,21 @@ import java.util.List;
 public class Population {
 
     private List<Individual> populationList;
-    private double lowestFitness;
-    private double highestFitness;
-    private double averageFitness;
     private int populationSize;
 
-    //todo: add average, min en max age
-
-    //todo: implementeren
+    //statistical
+    private double minFitness;
+    private double maxFitness;
+    private double averageFitness;
     private double stdevFitness;
 
-    //todo: naar stdev
-    private double[] averageGenomes = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    private int maxAge;
+    private int minAge;
+    private double averageAge;
+    private double stdevAge;
 
-    //todo: naar average of stdev
-    private double averageOfAverageGenomes;
+    private double[] stdevGenomes = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+    private double averageOfstdevGenomes;
 
     /**
      * init / constructor
@@ -128,11 +129,7 @@ public class Population {
             System.out.println("Killing part of the population");
             survivalSelection.kill(populationList);
 
-            // recalculate populationfitnessness
-            System.out.println("Record stats");
-            reCalculateStats();
-
-            System.out.println(highestFitness);
+            // done
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,58 +140,33 @@ public class Population {
 
     /**
      * calculate statistics of current population.
-     * todo: afmaken
+     *
      */
     private void reCalculateStats() {
 
-        populationList.sort(Comparator.comparing(Individual::getFitness));
+        try {
 
-//        String een = "";
-//
-//        for (Individual individual : populationList) {
-//            een = een + "(" + String.valueOf(individual.getFitness()).substring(0, 4)  + ", " + String.valueOf(individual.getAge()) + "),\t";
-//        }
-//
-//        System.out.println(een);
+            Map ageResults = StatisticUtil.getAgeStats(populationList);
+            maxAge = (Integer) ageResults.get(StatisticUtil.MAX);
+            minAge = (Integer) ageResults.get(StatisticUtil.MIN);
+            averageAge = (Double) ageResults.get(StatisticUtil.AVERAGE);
+            stdevAge = (Double) ageResults.get(StatisticUtil.STDEV);
 
-        double max = -60000000000000.0;
-        double min = 600000000000000.0;
-        double total = 0.0;
-        double[] genomeSum = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+            Map fitnessResults = StatisticUtil.getFitnessStats(populationList);
+            maxFitness = (Double) fitnessResults.get(StatisticUtil.MAX);
+            minFitness = (Double) fitnessResults.get(StatisticUtil.MIN);
+            averageFitness = (Double) fitnessResults.get(StatisticUtil.AVERAGE);
+            stdevFitness = (Double) fitnessResults.get(StatisticUtil.STDEV);
 
-        for (Individual individual : populationList) {
-            double fitness = individual.getFitness();
-            double[] genome = individual.getGenoType().getGenome();
-            if (fitness > max) {
-                max = fitness;
-            }
-            if (fitness < min) {
-                min = fitness;
-            }
-            total += fitness;
-            int i = 0;
-            for (double gen : genome) {
-                genomeSum[i] += gen;
-                i++;
-            }
+            Map genomeResults = StatisticUtil.getGenomeStats(populationList);
+            stdevGenomes = (double[]) genomeResults.get(StatisticUtil.STDEV);
+            averageOfstdevGenomes = (Double) genomeResults.get(StatisticUtil.AVERAGE + StatisticUtil.STDEV);
+
+        } catch (Exception e) {
+            System.out.println("Error calculating statistics:");
+            e.printStackTrace();
+            System.out.println("Continue anyway");
         }
-
-        double sumStDevs = 0;
-        int i = 0;
-        for (double v : genomeSum) {
-            averageGenomes[i] = v/((double) populationSize);
-            sumStDevs += v/((double) populationSize);
-            i++;
-        }
-        averageOfAverageGenomes = sumStDevs/10.0;
-
-        averageFitness = total/ ((double) populationSize);
-
-        highestFitness = max;
-        lowestFitness = min;
-
-        //todo: afmaken
-        stdevFitness = 404.0;
 
     }
 
@@ -206,20 +178,28 @@ public class Population {
         this.populationList = populationList;
     }
 
-    public double getLowestFitness() {
-        return lowestFitness;
+    public int getPopulationSize() {
+        return populationSize;
     }
 
-    public void setLowestFitness(double lowestFitness) {
-        this.lowestFitness = lowestFitness;
+    public void setPopulationSize(int populationSize) {
+        this.populationSize = populationSize;
     }
 
-    public double getHighestFitness() {
-        return highestFitness;
+    public double getMinFitness() {
+        return minFitness;
     }
 
-    public void setHighestFitness(double highestFitness) {
-        this.highestFitness = highestFitness;
+    public void setMinFitness(double minFitness) {
+        this.minFitness = minFitness;
+    }
+
+    public double getMaxFitness() {
+        return maxFitness;
+    }
+
+    public void setMaxFitness(double maxFitness) {
+        this.maxFitness = maxFitness;
     }
 
     public double getAverageFitness() {
@@ -230,14 +210,6 @@ public class Population {
         this.averageFitness = averageFitness;
     }
 
-    public int getPopulationSize() {
-        return populationSize;
-    }
-
-    public void setPopulationSize(int populationSize) {
-        this.populationSize = populationSize;
-    }
-
     public double getStdevFitness() {
         return stdevFitness;
     }
@@ -246,33 +218,66 @@ public class Population {
         this.stdevFitness = stdevFitness;
     }
 
-    public double[] getAverageGenomes() {
-        return averageGenomes;
+    public int getMaxAge() {
+        return maxAge;
     }
 
-    public void setAverageGenomes(double[] averageGenomes) {
-        this.averageGenomes = averageGenomes;
+    public void setMaxAge(int maxAge) {
+        this.maxAge = maxAge;
     }
 
-    public double getAverageOfAverageGenomes() {
-        return averageOfAverageGenomes;
+    public int getMinAge() {
+        return minAge;
     }
 
-    public void setAverageOfAverageGenomes(double averageOfAverageGenomes) {
-        this.averageOfAverageGenomes = averageOfAverageGenomes;
+    public void setMinAge(int minAge) {
+        this.minAge = minAge;
     }
 
-    /** builds statistic object of current
+    public double getAverageAge() {
+        return averageAge;
+    }
+
+    public void setAverageAge(double averageAge) {
+        this.averageAge = averageAge;
+    }
+
+    public double getStdevAge() {
+        return stdevAge;
+    }
+
+    public void setStdevAge(double stdevAge) {
+        this.stdevAge = stdevAge;
+    }
+
+    public double[] getStdevGenomes() {
+        return stdevGenomes;
+    }
+
+    public void setStdevGenomes(double[] stdevGenomes) {
+        this.stdevGenomes = stdevGenomes;
+    }
+
+    public double getAverageOfstdevGenomes() {
+        return averageOfstdevGenomes;
+    }
+
+    public void setAverageOfstdevGenomes(double averageOfstdevGenomes) {
+        this.averageOfstdevGenomes = averageOfstdevGenomes;
+    }
+
+    /** builds statistic object of current population
      *
      * @return
      */
     public Statistic getStatistic() {
 
-        //update
+        // recalculate populationfitnessness
+        System.out.println("Record stats");
         reCalculateStats();
 
-        // return build
-        return new Statistic(lowestFitness, highestFitness, averageFitness, populationSize, stdevFitness, averageGenomes, averageOfAverageGenomes);
+        // return builded statistic
+        return new Statistic(populationSize, minFitness, maxFitness, averageFitness, stdevFitness, maxAge, minAge, averageAge, stdevAge, stdevGenomes, averageOfstdevGenomes);
 
     }
 }

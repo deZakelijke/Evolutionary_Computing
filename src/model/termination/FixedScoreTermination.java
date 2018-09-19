@@ -15,7 +15,7 @@ public class FixedScoreTermination extends EmptyTermination implements Terminati
 
     @Override
     public boolean isItDone(Population population) {
-        return score<=population.getHighestFitness();
+        return score<=population.getMaxFitness();
     }
 
 
