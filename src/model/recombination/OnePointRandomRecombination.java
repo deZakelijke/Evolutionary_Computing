@@ -11,6 +11,7 @@ public class OnePointRandomRecombination implements RecombinationInterface {
 
     Random rand = new Random();
 
+    // todo schaalbaar maken
     @Override
     public List<Individual> reproduce(List<Individual> selectedForReproduction) {
         List<Individual> kiddos = new ArrayList<>();

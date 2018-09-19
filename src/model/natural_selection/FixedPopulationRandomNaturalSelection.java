@@ -8,17 +8,12 @@ import java.util.Random;
 /**
  * kills some random individuals untill fixed population
  */
-public class FixedPopulationRandomNaturalSelection implements NaturalSelectionInterface
-
-
-
-{
+public class FixedPopulationRandomNaturalSelection extends EmptyNaturalSelection implements NaturalSelectionInterface {
 
     Random rand = new Random();
-    int size  = 0;
 
     public FixedPopulationRandomNaturalSelection(int initialPopulationSize) {
-        this.size = initialPopulationSize;
+        super(initialPopulationSize);
     }
 
     @Override
@@ -26,7 +21,7 @@ public class FixedPopulationRandomNaturalSelection implements NaturalSelectionIn
 
         int i = 0;
 
-        while (populationList.size() > size) {
+        while (populationList.size() > getPopulationsize()) {
             populationList.remove(rand.nextInt(populationList.size() - 1));
             i++;
         }

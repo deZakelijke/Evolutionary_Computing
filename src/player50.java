@@ -4,7 +4,6 @@ import model.mutation.EmptyMutation;
 import model.mutation.MutationInterface;
 import model.mutation.UniformMutation;
 import model.natural_selection.*;
-import model.recombination.BasicRecombination;
 import model.recombination.EmptyRecombination;
 import model.recombination.OnePointRandomRecombination;
 import model.recombination.RecombinationInterface;
@@ -22,8 +21,14 @@ public class player50 implements ContestSubmission  {
 	private Random rnd_;
 	private ContestEvaluation evaluation_;
     private int evaluations_limit_;
-    private static final int POPULATIONSIZE = 100;
-    private static final int GENOMESIZE = 10;
+    private int POPULATIONSIZE;
+    private int GENOMESIZE;
+    private double MUTATIONRATE;
+    private double REPRODUCTIONRATE;
+    private int NUMBER_OF_PARENTS;
+    private int NUMBER_OF_COUPLES;
+    private double SCORE_TERMINATION;
+    private int GENERATION_TERMINATION;
 
 
 	private static final String MUTATION ="MUTATION";
@@ -75,6 +80,17 @@ public class player50 implements ContestSubmission  {
 		// determines wether run will be logged
 		LOG = false;
 
+		//other run variables
+		POPULATIONSIZE = 100;
+		GENOMESIZE = 10;
+		MUTATIONRATE = 1.0;
+		REPRODUCTIONRATE = 0.3;
+		NUMBER_OF_PARENTS = 2;
+		NUMBER_OF_COUPLES = (int) Math.round((POPULATIONSIZE*REPRODUCTIONRATE)/NUMBER_OF_PARENTS);
+		SCORE_TERMINATION = 9.5;
+		GENERATION_TERMINATION = 100;
+
+
 		return config;
 	}
 
@@ -88,29 +104,27 @@ public class player50 implements ContestSubmission  {
 		/**##########################################*/
 
 		// mutations
-		mutationMap.put("empty", new EmptyMutation());
-		mutationMap.put("uniform", new UniformMutation());
-		mutationMap.put("gaussian", new GaussianMutation());
+		mutationMap.put("empty", new EmptyMutation(MUTATIONRATE));
+		mutationMap.put("uniform", new UniformMutation(MUTATIONRATE));
+		mutationMap.put("gaussian", new GaussianMutation(MUTATIONRATE));
 
 		// natural selections
-		naturalSelectionMap.put("empty", new EmptyNaturalSelection());
-		naturalSelectionMap.put("basic", new BasicNaturalSelection());
+		naturalSelectionMap.put("empty", new EmptyNaturalSelection(POPULATIONSIZE));
 		naturalSelectionMap.put("fixed_population_random", new FixedPopulationRandomNaturalSelection(POPULATIONSIZE));
 		naturalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffNaturalSelection(POPULATIONSIZE));
 
 		// terminators
 		terminatorMap.put("indefinite", new EmptyTerminator());
 		terminatorMap.put("evaluation_based", new EvaluationsExhaustedTerminator(evaluations_limit_));
-		terminatorMap.put("generation_based", new FixedGenerationsTerminator(100));
-		terminatorMap.put("score_based", new FixedScoreTerminator(9.5));
+		terminatorMap.put("generation_based", new FixedGenerationsTerminator(GENERATION_TERMINATION));
+		terminatorMap.put("score_based", new FixedScoreTerminator(SCORE_TERMINATION));
 
 		// sexual selections
-		sexualSelectionMap.put("empty", new EmptySexualSelection());
-		sexualSelectionMap.put("basic", new BasicSexualSelection(20, 1));
+		sexualSelectionMap.put("empty", new EmptySexualSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		sexualSelectionMap.put("basic", new BasicSexualSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
-		recombinationMap.put("basic", new BasicRecombination());
 		recombinationMap.put("one_point_random", new OnePointRandomRecombination());
 
 	}
@@ -152,8 +166,8 @@ public class player50 implements ContestSubmission  {
 
 		try {
 			// config utils
-			fillConfigurationMap();
 			Map config = getRunConfiguration();
+			fillConfigurationMap();
 
 			// print configuration
 			System.out.println("Configuration:\n" + config.toString());

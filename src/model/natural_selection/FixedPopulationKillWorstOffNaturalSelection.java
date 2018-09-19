@@ -9,12 +9,10 @@ import java.util.Random;
 /**
  * kills the x worst performing of a population, until a fixed populationsize
  */
-public class FixedPopulationKillWorstOffNaturalSelection implements NaturalSelectionInterface {
-
-    int size = 0;
+public class FixedPopulationKillWorstOffNaturalSelection extends EmptyNaturalSelection implements NaturalSelectionInterface {
 
     public FixedPopulationKillWorstOffNaturalSelection(int initialPopulationSize) {
-        this.size = initialPopulationSize;
+        super(initialPopulationSize);
     }
 
     @Override
@@ -23,7 +21,7 @@ public class FixedPopulationKillWorstOffNaturalSelection implements NaturalSelec
 
         populationList.sort(Comparator.comparing(Individual::getFitness));
 
-        while (populationList.size() > size) {
+        while (populationList.size() > getPopulationsize()) {
             populationList.remove(0);
             i++;
         }

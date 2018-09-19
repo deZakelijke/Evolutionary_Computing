@@ -6,11 +6,19 @@ import model.Genome;
 import java.util.Random;
 import java.util.List;
 
-public class UniformMutation implements MutationInterface {
+
+/***
+ * =broken
+ */
+public class UniformMutation extends EmptyMutation implements MutationInterface {
+
+    public UniformMutation(double mutationRate) {
+        super(mutationRate);
+    }
 
     /**
      * Mutation function for mutating children with uniform distribution.
-     *
+     * todo: fixen en mutationrate meenemen
      */
     @Override
     public List<Individual> doMutation(List<Individual> children) {

@@ -6,7 +6,11 @@ import model.Genome;
 
 import java.util.List;
 
-public class GaussianMutation implements MutationInterface {
+public class GaussianMutation extends EmptyMutation implements MutationInterface {
+
+    public GaussianMutation(double mutationRate) {
+        super(mutationRate);
+    }
 
     /**
      * Mutation function for mutating children with Gaussian.
@@ -15,6 +19,8 @@ public class GaussianMutation implements MutationInterface {
      * if we want to, but passing the desired variance requires a
      * different function header or that it is saved in the Individual
      * class or something like that.
+     *
+     * todo: mutationrate meenemen
      */
     @Override
     public List<Individual> doMutation(List<Individual> children) {
