@@ -1,4 +1,4 @@
-package model.natural_selection;
+package model.survival_selection;
 
 import model.Individual;
 import java.util.List;

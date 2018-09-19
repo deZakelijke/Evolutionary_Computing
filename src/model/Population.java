@@ -2,11 +2,11 @@ package model;
 
 
 import model.mutation.Mutation;
-import model.natural_selection.SurvivalSelection;
+import model.survival_selection.SurvivalSelection;
 import model.recombination.Recombination;
-import model.sexual_selection.ParentSelection;
+import model.parent_selection.ParentSelection;
 import model.stats.Statistic;
-import model.terminator.TerminationContext;
+import model.termination.TerminationContext;
 import org.vu.contest.ContestEvaluation;
 
 import java.util.ArrayList;

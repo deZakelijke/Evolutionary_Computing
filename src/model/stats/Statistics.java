@@ -1,5 +1,7 @@
 package model.stats;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -34,33 +36,10 @@ public class Statistics {
 
             List<String> data = accumelateData();
 
-            try {
+            //todo: max
 
 
-                String path = System.getProperty("user.dir") + "/log/"+filename;
-
-                PrintWriter pw = new PrintWriter(new File(path));
-
-                StringBuilder sb = new StringBuilder();
-
-                for (String dataLine : data) {
-                    sb.append(dataLine);
-                    sb.append("\n");
-                }
-
-                pw.write(sb.toString());
-                pw.close();
-
-                System.out.println("Saved: "+ path);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                for (String datalLine : data) {
-                    System.out.println(datalLine);
-                }
-
-                System.out.println("\n\nSaving logs failed, printed to terminal instead in order to not lose anything");
-            }
+        throw new NotImplementedException();
 
     }
 

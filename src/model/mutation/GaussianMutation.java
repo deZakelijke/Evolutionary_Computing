@@ -19,8 +19,6 @@ public class GaussianMutation extends EmptyMutation implements Mutation {
      * if we want to, but passing the desired variance requires a
      * different function header or that it is saved in the Individual
      * class or something like that.
-     *
-     * todo: mutationrate meenemen
      */
     @Override
     public void doMutation(List<Individual> children) {
@@ -31,19 +29,25 @@ public class GaussianMutation extends EmptyMutation implements Mutation {
         Random r = new Random();
 
         for (int i = 0; i < nr_children; i++) {
-            mutated_genome = children.get(i).getGenoType();
-            genome_size = mutated_genome.getSize();
-            genome_array = mutated_genome.getGenome();
 
-            for (int j = 0; j < genome_size; j++) {
-                genome_array[j] += r.nextGaussian(); // Can be done with mean and variance
-                if (genome_array[j] > 5.0) {
-                    genome_array[j] = 5.0;
-                } else if (genome_array[j] < -5.0) {
-                    genome_array[j] = -5.0;
+            // chooses uniform by mutationrate wether to mutate at all
+            if (r.nextDouble() <= getMutationRate()) {
+
+                mutated_genome = children.get(i).getGenoType();
+                genome_size = mutated_genome.getSize();
+                genome_array = mutated_genome.getGenome();
+
+                // gaussian mutation
+                for (int j = 0; j < genome_size; j++) {
+                    genome_array[j] += r.nextGaussian(); // Can be done with mean and variance
+                    if (genome_array[j] > 5.0) {
+                        genome_array[j] = 5.0;
+                    } else if (genome_array[j] < -5.0) {
+                        genome_array[j] = -5.0;
+                    }
                 }
+                mutated_genome.setGenome(genome_array);
             }
-            mutated_genome.setGenome(genome_array);
         }
     }
 }

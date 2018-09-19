@@ -3,17 +3,18 @@ import model.mutation.GaussianMutation;
 import model.mutation.EmptyMutation;
 import model.mutation.Mutation;
 import model.mutation.UniformMutation;
-import model.natural_selection.*;
+import model.survival_selection.*;
 import model.recombination.EmptyRecombination;
 import model.recombination.OnePointRandomRecombination;
 import model.recombination.Recombination;
-import model.sexual_selection.UniformParentSelection;
-import model.sexual_selection.EmptyParentSelection;
-import model.sexual_selection.ParentSelection;
+import model.parent_selection.UniformParentSelection;
+import model.parent_selection.EmptyParentSelection;
+import model.parent_selection.ParentSelection;
 import model.stats.Statistics;
-import model.terminator.*;
+import model.termination.*;
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
+import java.awt.Toolkit;
 
 import java.util.*;
 
@@ -29,21 +30,22 @@ public class player50 implements ContestSubmission  {
     private int NUMBER_OF_COUPLES;
     private double SCORE_TERMINATION;
     private int GENERATION_TERMINATION;
+    private int RUNS_PER_CONFIG;
 
 
 	private static final String MUTATION ="MUTATION";
-	private static final String NATURAL  ="NATURAL";
-	private static final String SEXUAL = "SEXUAL";
+	private static final String SURVIVAL ="SURVIVAL";
+	private static final String PARENT = "PARENT";
 	private static final String RECOMBINATION ="RECOMBINATION";
 	private static final String TERMINATION ="TERMINATION";
 
 	private boolean LOG;
 
     private Map<String, Mutation> mutationMap = new HashMap<>();
-	private Map<String, SurvivalSelection> naturalSelectionMap = new HashMap<>();
-	private Map<String, ParentSelection> sexualSelectionMap = new HashMap<>();
+	private Map<String, SurvivalSelection> survivalSelectionMap = new HashMap<>();
+	private Map<String, ParentSelection> parentSelectionMap = new HashMap<>();
 	private Map<String, Recombination> recombinationMap = new HashMap<>();
-	private Map<String, TerminationContext> terminatorMap = new HashMap<>();
+	private Map<String, TerminationContext> terminationContextMap = new HashMap<>();
 	
 	public player50()
 	{
@@ -72,9 +74,7 @@ public class player50 implements ContestSubmission  {
 		Map<String, String> config  = new HashMap();
 
 		config.put(	TERMINATION, 		"evaluation_based");
-		config.put(	SEXUAL,				"basic");
-		config.put(	NATURAL, 			"fixed_population_worst");
-		config.put(	RECOMBINATION, 		"one_point_random");
+		config.put(	SURVIVAL, 			"fixed_population_worst");
 		config.put(	MUTATION, 			"gaussian");
 
 		// determines wether run will be logged
@@ -83,12 +83,13 @@ public class player50 implements ContestSubmission  {
 		//other run variables
 		POPULATIONSIZE = 100;
 		GENOMESIZE = 10;
-		MUTATIONRATE = 1.0;
+		MUTATIONRATE = 0.8;
 		REPRODUCTIONRATE = 0.3;
 		NUMBER_OF_PARENTS = 2;
 		NUMBER_OF_COUPLES = (int) Math.round((POPULATIONSIZE*REPRODUCTIONRATE)/NUMBER_OF_PARENTS);
 		SCORE_TERMINATION = 9.5;
 		GENERATION_TERMINATION = 100;
+		RUNS_PER_CONFIG = 100;
 
 
 		return config;
@@ -109,19 +110,19 @@ public class player50 implements ContestSubmission  {
 		mutationMap.put("gaussian", new GaussianMutation(MUTATIONRATE));
 
 		// natural selections
-		naturalSelectionMap.put("empty", new EmptySurvivalSelection(POPULATIONSIZE));
-		naturalSelectionMap.put("fixed_population_random", new FixedPopulationRandomSurvivalSelection(POPULATIONSIZE));
-		naturalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffSurvivalSelection(POPULATIONSIZE));
+		survivalSelectionMap.put("empty", new EmptySurvivalSelection(POPULATIONSIZE));
+		survivalSelectionMap.put("fixed_population_random", new FixedPopulationRandomSurvivalSelection(POPULATIONSIZE));
+		survivalSelectionMap.put("fixed_population_worst", new FixedPopulationKillWorstOffSurvivalSelection(POPULATIONSIZE));
 
 		// terminators
-		terminatorMap.put("indefinite", new EmptyTermination());
-		terminatorMap.put("evaluation_based", new EvaluationsExhaustedTermination(evaluations_limit_));
-		terminatorMap.put("generation_based", new FixedGenerationsTermination(GENERATION_TERMINATION));
-		terminatorMap.put("score_based", new FixedScoreTermination(SCORE_TERMINATION));
+		terminationContextMap.put("indefinite", new EmptyTermination());
+		terminationContextMap.put("evaluation_based", new EvaluationsExhaustedTermination(evaluations_limit_));
+		terminationContextMap.put("generation_based", new FixedGenerationsTermination(GENERATION_TERMINATION));
+		terminationContextMap.put("score_based", new FixedScoreTermination(SCORE_TERMINATION));
 
 		// sexual selections
-		sexualSelectionMap.put("empty", new EmptyParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
-		sexualSelectionMap.put("basic", new UniformParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		parentSelectionMap.put("empty", new EmptyParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		parentSelectionMap.put("basic", new UniformParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
@@ -155,83 +156,134 @@ public class player50 implements ContestSubmission  {
     }
 
 	/**
-	 * runs EA
+	 * runs all experiments EA
 	 */
-	public void run()
-	{
+	public void run()  {
+
+		long startTime = new Date().getTime();
+
+		// define what is to be tested
+		List<String> parentSchemes = Arrays.asList("", "");
+		List<String> recombinationSchemes = Arrays.asList("", "");
+		List<Integer> parents = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+
+
+		// loop through nr of parents
+		for (Integer parent_nr : parents) {
+
+			System.out.println(String.format("Starting all experiments for %d parents", parent_nr));
+
+			// loop through nr of recombinationschemes
+			for (String recombinationScheme : recombinationSchemes) {
+
+				// loop through parent schemes
+				for (String parentScheme : parentSchemes) {
+
+					System.out.println(String.format("Starting the %d experiments for %d parents with %s recombination and %s parentscheme", RUNS_PER_CONFIG, parent_nr, recombinationScheme, parentScheme));
+
+					// do a number of experiments for statistical significance
+					for (int i = 0; i < RUNS_PER_CONFIG; i++) {
+
+						System.out.println(String.format("Sarting run %d out of %d", i, RUNS_PER_CONFIG));
+
+						String runName = "experiment="+ String.valueOf(startTime) + "_n=" +String.valueOf(i);
+
+						do_EA_Run(runName, parentScheme,recombinationScheme, parent_nr);
+
+					}
+				}
+			}
+		}
+
+		// notify user of termination experiments
+		System.out.println("DONE");
+		int numbeeps = 3;
+		for(int x=0;x<numbeeps;x++) {
+			Toolkit.getDefaultToolkit().beep();
+		}
+	}
+
+	/**
+	 * runs one EA experiment
+	 */
+	private void do_EA_Run(String name, String parentScheme, String recombinationScheme, int nr_parents) {
 
 		// init logs
-		Statistics stats = new Statistics();
-		long run_nr = new Date().getTime();
+		Statistics statistics = new Statistics();
+		String runName = name+"_"+parentScheme+"_"+recombinationScheme+"_"+String.valueOf(nr_parents);
 
 		try {
 			// config utils
 			Map config = getRunConfiguration();
+			config.put(PARENT,				parentScheme);
+			config.put(RECOMBINATION, 		recombinationScheme);
+			NUMBER_OF_PARENTS = nr_parents;
+
 			fillConfigurationMap();
 
 			// print configuration
+			System.out.println("Starting: " + runName);
 			System.out.println("Configuration:\n" + config.toString());
 
 			// init configuration
-			TerminationContext terminator = terminatorMap.get(config.get(TERMINATION));
-			ParentSelection sexual = sexualSelectionMap.get(config.get(SEXUAL));
-			SurvivalSelection natural = naturalSelectionMap.get(config.get(NATURAL));
-			Recombination recomb = recombinationMap.get(config.get(RECOMBINATION));
+			TerminationContext terminationContext = terminationContextMap.get(config.get(TERMINATION));
+			ParentSelection parentSelection = parentSelectionMap.get(parentScheme);
+			SurvivalSelection survivalSelection = survivalSelectionMap.get(config.get(SURVIVAL));
+			Recombination recombination = recombinationMap.get(recombinationScheme);
 			Mutation mutation = mutationMap.get(config.get(MUTATION));
 
 			// init population
-			Population population = new Population(POPULATIONSIZE, GENOMESIZE, evaluation_, terminator);
+			Population population = new Population(POPULATIONSIZE, GENOMESIZE, evaluation_, terminationContext);
 
 			// add first measurement
-			stats.addStatistic(population.getStatistic());
+			statistics.addStatistic(population.getStatistic());
 
 			// run generations
 			while (true) {
 
 				// notify user of start
-				System.out.println(String.format("Start generation: %d", terminator.getGenerationNumber()));
-				System.out.println(String.format("Number of exhausted evaluations: %d out of %d", terminator.getDoneEvaluations(), evaluations_limit_));
+				System.out.println(String.format("Start generation: %d", terminationContext.getGenerationNumber()));
+				System.out.println(String.format("Number of exhausted evaluations: %d out of %d", terminationContext.getDoneEvaluations(), evaluations_limit_));
 
 				// do one generation
-				population.runGeneration(evaluation_, mutation, recomb, natural, sexual, terminator);
+				population.runGeneration(evaluation_, mutation, recombination, survivalSelection, parentSelection, terminationContext);
 
 				// add measurement
-				stats.addStatistic(population.getStatistic());
+				statistics.addStatistic(population.getStatistic());
 
 				// check termination condition
-				if (terminator.isItDone(population)) {
+				if (terminationContext.isItDone(population)) {
 					break;
 				}
 
 				// notify user of progress
-				stats.printLastStatistics();
+				statistics.printLastStatistics();
 				System.out.println("Finished generation\n");
 
 				//++ generation number
-				terminator.addGeneration();
+				terminationContext.addGeneration();
 			}
 
 			// final notification
 			System.out.println("Final score:");
-			stats.printLastStatistics();
+			statistics.printLastStatistics();
 			System.out.println("Done evolving");
 
 			// export run
 			if (LOG) {
-				stats.exportRun(String.format("/results/run_%s.csv", String.valueOf(run_nr)));
+				statistics.exportRun(String.format("/results/run_%s.csv", runName));
 			}
 
 		} catch (Exception e) {
 
 			// export run
 			if (LOG) {
-				stats.exportRun(String.format("/results/error_run_%s.csv", String.valueOf(run_nr)));
+				statistics.exportRun(String.format("/results/error_run_%s.csv", runName));
 			}
 			e.printStackTrace();
 			throw e;
 
 		}
-
 
 	}
 
