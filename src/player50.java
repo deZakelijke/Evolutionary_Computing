@@ -83,7 +83,7 @@ public class player50 implements ContestSubmission  {
 		//other run variables
 		POPULATIONSIZE = 100;
 		GENOMESIZE = 10;
-		MUTATIONRATE = 1.0;
+		MUTATIONRATE = 0.8;
 		REPRODUCTIONRATE = 0.3;
 		NUMBER_OF_PARENTS = 2;
 		NUMBER_OF_COUPLES = (int) Math.round((POPULATIONSIZE*REPRODUCTIONRATE)/NUMBER_OF_PARENTS);
