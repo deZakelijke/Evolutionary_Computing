@@ -1,4 +1,4 @@
-package model.terminator;
+package model.termination;
 
 import model.Population;
 /**

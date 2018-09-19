@@ -1,4 +1,4 @@
-package model.sexual_selection;
+package model.parent_selection;
 
 import model.Individual;
 import java.util.ArrayList;
