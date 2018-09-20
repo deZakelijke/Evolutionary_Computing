@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Comparator;
 import java.util.Random;
 
-public class StochasticFitnessParentSelection extends EmptyParentSelection implements ParentSelection {
+public class StochasticParentSelection extends EmptyParentSelection implements ParentSelection {
 
 
     /**
@@ -19,7 +19,7 @@ public class StochasticFitnessParentSelection extends EmptyParentSelection imple
      * @param nr_parents
      * @param nr_couples
      */
-    public StochasticFitnessParentSelection(int nr_parents, int nr_couples) {
+    public StochasticParentSelection(int nr_parents, int nr_couples) {
         super(nr_parents, nr_couples);
     }
 
