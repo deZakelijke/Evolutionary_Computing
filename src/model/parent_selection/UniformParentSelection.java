@@ -3,6 +3,7 @@ package model.parent_selection;
 import model.Individual;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,10 +27,11 @@ public class UniformParentSelection extends EmptyParentSelection implements Pare
      */
     @Override
     public List<Individual[]> select(List<Individual> populationList) {
+
         int length = populationList.size();
         Random r = new Random();
         if (length < getNr_parents()) return null;
-        List<Individual[]> parents = new ArrayList<Individual[]>();
+        List<Individual[]> parents = new ArrayList<>();
 
         for (int i = 0 ; i < this.nr_couples; i++) {
             Individual[] new_couple = new Individual[this.nr_parents];
@@ -39,6 +41,7 @@ public class UniformParentSelection extends EmptyParentSelection implements Pare
             parents.add(new_couple);
         }
         return parents;
+
         // Bereken totale fitness score, prob. voor selectie is f/Sf
         // Zorgt mestal voor te snelle convergence
         // Windowing toepassen: min(f) van elke f afhalen
