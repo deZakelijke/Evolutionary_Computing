@@ -4,6 +4,7 @@ import model.Individual;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
@@ -28,13 +29,12 @@ public class UniformParentSelection extends EmptyParentSelection implements Pare
         int length = populationList.size();
         Random r = new Random();
         if (length < getNr_parents()) return null;
+        List<Individual[]> parents = new ArrayList<Individual[]>();
 
-
-        List<Individual[]> parents = new List<Individual[]>;
         for (int i = 0 ; i < this.nr_couples; i++) {
             Individual[] new_couple = new Individual[this.nr_parents];
             for (int j = 0; j < this.nr_parents; j++) {
-                new_couple[j] = populatinListget(r.nextInt(length));
+                new_couple[j] = populationList.get(r.nextInt(length));
             }
             parents.add(new_couple);
         }

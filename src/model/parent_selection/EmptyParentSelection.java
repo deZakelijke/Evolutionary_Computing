@@ -6,9 +6,9 @@ import java.util.List;
 
 public class EmptyParentSelection implements ParentSelection {
 
-    private int nr_parents;
+    protected int nr_parents;
 
-    private int nr_couples;
+    protected int nr_couples;
 
     public EmptyParentSelection(int nr_parents, int nr_couples) {
         this.nr_parents = nr_parents;
