@@ -11,5 +11,5 @@ python compile.py
 
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(pwd)"
 
-java -jar testrun.jar -submission=player50 -evaluation=BentCigarFunction -seed=1 > ./log/jeRunBitch.txt && tail -1000f ./log/jeRunBitch.txt
+java -jar testrun.jar -submission=player50 -evaluation=BentCigarFunction -seed=1 | tee ./log/jeRunBitch23.txt
 

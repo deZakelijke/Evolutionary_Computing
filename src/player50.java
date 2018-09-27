@@ -137,7 +137,7 @@ public class player50 implements ContestSubmission  {
 
 		// Set evaluation problem used in the run
 		evaluation_ = evaluation;
-		
+
 		// Get evaluation properties
 		Properties props = evaluation.getProperties();
         // Get evaluation limit
@@ -163,10 +163,14 @@ public class player50 implements ContestSubmission  {
 
 		long startTime = new Date().getTime();
 
-		// define what is to be tested
+		/** #######################################################
+		 *  DEFINE TESTS
+		 *  ############################################# */
 		List<String> parentSchemes = Arrays.asList("uniform");
 		List<String> recombinationSchemes = Arrays.asList("empty");
 		List<Integer> parents = Arrays.asList(2);
+		//  ##################################################   er staat geen recombination op git atm, jawel maar lokaal
+
 
         getRunConfiguration();
 
