@@ -90,7 +90,7 @@ public class player50 implements ContestSubmission  {
 		SCORE_TERMINATION = 9.5;
 		GENERATION_TERMINATION = 100;
 		RUNS_PER_CONFIG = 2;
-		DEBUG = false;
+		DEBUG = true;
 
 
 		return config;
@@ -265,6 +265,7 @@ public class player50 implements ContestSubmission  {
 
 				// notify user of progress
 				statistics.printLastStatistics();
+				terminationContext.debugLine(statistics.getLast().toString());
 				terminationContext.debugLine("Finished generation\n");
 
 				//++ generation number
