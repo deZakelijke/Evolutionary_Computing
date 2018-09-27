@@ -23,5 +23,9 @@ public interface TerminationContext {
     public int getDoneEvaluations();
 
     int getGenerationNumber();
+
+    void debugLine(String line);
+
+    void setDebug(boolean debug);
 }
 
