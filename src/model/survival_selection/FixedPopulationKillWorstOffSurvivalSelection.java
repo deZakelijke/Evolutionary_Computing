@@ -25,6 +25,5 @@ public class FixedPopulationKillWorstOffSurvivalSelection extends EmptySurvivalS
             i++;
         }
 
-        System.out.println(String.format("Killed %d individuals, populationsize back to %d", i, populationList.size()));
     }
 }
