@@ -54,19 +54,4 @@ public class StochasticParentSelection extends EmptyParentSelection implements P
         
         return parents;
     }
-
-    private int get_random_index(double[] cumulative_fitness, Random r, int length) {
-        double random_number = r.nextDouble() * cumulative_fitness[length - 1];
-        int index = length / 2;
-        while (!(cumulative_fitness[index] < random_number) || 
-               !(cumulative_fitness[index + 1] > random_number)) {
-            if (cumulative_fitness[index] > random_number) {
-                index /= 2;
-            } else {
-                index *= 2;
-            }
-        }
-        return index;
-    }
-
 }
