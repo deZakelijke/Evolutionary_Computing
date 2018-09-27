@@ -1,7 +1,6 @@
 package model.parent_selection;
 
 import model.Individual;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.ArrayList;

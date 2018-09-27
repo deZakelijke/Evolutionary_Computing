@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class UniformParentSelection extends EmptyParentSelection implements ParentSelection {
+public class TournamentParentSelection extends EmptyParentSelection implements ParentSelection {
 
 
     /**
@@ -17,7 +17,7 @@ public class UniformParentSelection extends EmptyParentSelection implements Pare
      * @param nr_parents
      * @param nr_couples
      */
-    public UniformParentSelection(int nr_parents, int nr_couples) {
+    public TournamentParentSelection(int nr_parents, int nr_couples) {
         super(nr_parents, nr_couples);
     }
 
@@ -32,19 +32,7 @@ public class UniformParentSelection extends EmptyParentSelection implements Pare
         if (length < getNr_parents()) return null;
         List<Individual[]> parents = new ArrayList<>();
 
-        for (int i = 0 ; i < this.nr_couples; i++) {
-            Individual[] new_couple = new Individual[this.nr_parents];
-            for (int j = 0; j < this.nr_parents; j++) {
-                new_couple[j] = populationList.get(r.nextInt(length));
-            }
-            parents.add(new_couple);
-        }
         return parents;
-
-        // Bereken totale fitness score, prob. voor selectie is f/Sf
-        // Zorgt mestal voor te snelle convergence
-        // Windowing toepassen: min(f) van elke f afhalen
-        //
     }
 
 }
