@@ -73,7 +73,7 @@ public class player50 implements ContestSubmission  {
 		// note: vanwege dependencies maar geen json inlezen maar gewoon een map
 		Map<String, String> config  = new HashMap();
 
-		config.put(	TERMINATION, 		"evaluation_based");
+		config.put(	TERMINATION, 		"generation_based");
 		config.put(	SURVIVAL, 			"fixed_population_worst");
 		config.put(	MUTATION, 			"gaussian");
 
@@ -89,7 +89,7 @@ public class player50 implements ContestSubmission  {
 		NUMBER_OF_COUPLES = (int) Math.round((POPULATIONSIZE*REPRODUCTIONRATE)/NUMBER_OF_PARENTS);
 		SCORE_TERMINATION = 9.5;
 		GENERATION_TERMINATION = 100;
-		RUNS_PER_CONFIG = 100;
+		RUNS_PER_CONFIG = 2;
 		DEBUG = false;
 
 
@@ -244,7 +244,7 @@ public class player50 implements ContestSubmission  {
 			while (true) {
 
 				// notify user of start
-				System.out.println(String.format("Start generation: %d", terminationContext.getGenerationNumber()));
+				terminationContext.debugLine(String.format("Start generation: %d", terminationContext.getGenerationNumber()));
 				terminationContext.debugLine(String.format("Number of exhausted evaluations: %d out of %d", terminationContext.getDoneEvaluations(), evaluations_limit_));
 
 				// do one generation
