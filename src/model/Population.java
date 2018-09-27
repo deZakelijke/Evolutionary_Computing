@@ -93,47 +93,47 @@ public class Population {
         try {
 
             // everyone is a (year?) older
-            System.out.println("Increasing age of everyone");
+            terminatorContext.debugLine("Increasing age of everyone");
             for (Individual individual : populationList) {
                 individual.ageOneYear();
             }
 
             // selection for reproduction
-            System.out.println("Selecting parents");
+            terminatorContext.debugLine("Selecting parents");
             List<Individual[]> parents = parentSelection.select(populationList);
-            System.out.println(String.format("parents selected: %d", parents.size()));
+            terminatorContext.debugLine(String.format("parents selected: %d", parents.size()));
 
             // recombination
-            System.out.println("Starting recombinations");
+            terminatorContext.debugLine("Starting recombinations");
             List<Individual> children = recombination.reproduce(parents);
-            System.out.println(String.format("Children generated: %d", children.size()));
+            terminatorContext.debugLine(String.format("Children generated: %d", children.size()));
 
             // mutation
-            System.out.println("Mutating children");
+            terminatorContext.debugLine("Mutating children");
             mutation.doMutation(children);
 
             // reevaluate
-            System.out.println("Evaluating children");
+            terminatorContext.debugLine("Evaluating children");
             for (Individual child : children) {
                 child.setFitness((double) evaluator.evaluate(child.getGenoType().getGenome()));
                 terminatorContext.addEvaluation();
             }
 
             // add newbournes to population
-            System.out.println("Adding children to population");
+            terminatorContext.debugLine("Adding children to population");
             for (Individual child : children) {
                 getPopulationList().add(child);
             }
 
             // natural selection
-            System.out.println("Killing part of the population");
+            terminatorContext.debugLine("Killing part of the population");
             survivalSelection.kill(populationList);
 
             // done
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            terminatorContext.debugLine(e.getMessage());
             throw e;
         }
     }
@@ -273,7 +273,6 @@ public class Population {
     public Statistic getStatistic() {
 
         // recalculate populationfitnessness
-        System.out.println("Record stats");
         reCalculateStats();
 
         // return builded statistic

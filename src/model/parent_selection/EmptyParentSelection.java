@@ -3,6 +3,10 @@ package model.parent_selection;
 import model.Individual;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Comparator;
+import java.util.Random;
 
 public class EmptyParentSelection implements ParentSelection {
 
@@ -36,4 +40,43 @@ public class EmptyParentSelection implements ParentSelection {
     public void setNr_couples(int nr_couples) {
         this.nr_couples = nr_couples;
     }
+
+    protected int get_random_index(double[] cumulative_fitness, Random r, int length) {
+        double random_number = r.nextDouble() * cumulative_fitness[length - 1];
+        int index = length / 2;
+        while (!(cumulative_fitness[index] < random_number) || 
+               !(cumulative_fitness[index + 1] > random_number)) {
+            if (cumulative_fitness[index] > random_number) {
+                index /= 2;
+            } else {
+                index *= 2;
+            }
+        }
+        return index;
+    }
+
+    protected List<Individual[]> weighted_random_selection(int length, double[] cumulative_fitness, 
+                                                         Random r, List<Individual> populationList) {
+        List<Individual[]> parents = new ArrayList<Individual[]>();
+        HashSet<Integer> selected = new HashSet<Integer>();
+        int random_index;
+
+        for (int i = 0; i < this.nr_couples; i++) {
+            Individual[] new_couple = new Individual[this.nr_parents];
+            while (selected.size() < this.nr_parents) {
+                random_index = get_random_index(cumulative_fitness, r, length);
+                selected.add(random_index);
+            }
+
+            int j = 0;
+            for (int index : selected) {
+                new_couple[j] = populationList.get(index);
+                j++;
+            }
+
+            parents.add(new_couple);
+        }
+        return parents; 
+    }
+
 }

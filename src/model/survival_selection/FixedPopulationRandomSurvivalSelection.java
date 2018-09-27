@@ -26,6 +26,5 @@ public class FixedPopulationRandomSurvivalSelection extends EmptySurvivalSelecti
             i++;
         }
 
-        System.out.println(String.format("Killed %d individuals, populationsize back to %d", i, populationList.size()));
     }
 }

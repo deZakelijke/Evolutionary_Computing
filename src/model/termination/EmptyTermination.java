@@ -9,6 +9,7 @@ public class EmptyTermination implements TerminationContext {
 
     private int doneEvaluations =0;
     private int generations = 0;
+    private boolean debug = false;
 
     public EmptyTermination() {
     }
@@ -38,6 +39,18 @@ public class EmptyTermination implements TerminationContext {
         return generations;
     }
 
+    @Override
+    public void debugLine(String line) {
+        if (debug) {
+            System.out.println(line);
+        }
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
     public void setDoneEvaluations(int doneEvaluations) {
         this.doneEvaluations = doneEvaluations;
     }
@@ -49,4 +62,9 @@ public class EmptyTermination implements TerminationContext {
     public void setGenerations(int generations) {
         this.generations = generations;
     }
+
+    public boolean isDebug() {
+        return debug;
+    }
+
 }

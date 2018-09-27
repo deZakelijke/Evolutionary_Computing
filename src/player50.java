@@ -30,6 +30,7 @@ public class player50 implements ContestSubmission  {
     private double SCORE_TERMINATION;
     private int GENERATION_TERMINATION;
     private int RUNS_PER_CONFIG;
+    private boolean DEBUG;
 
 
 	private static final String MUTATION ="MUTATION";
@@ -89,6 +90,7 @@ public class player50 implements ContestSubmission  {
 		SCORE_TERMINATION = 9.5;
 		GENERATION_TERMINATION = 100;
 		RUNS_PER_CONFIG = 100;
+		DEBUG = false;
 
 
 		return config;
@@ -230,6 +232,9 @@ public class player50 implements ContestSubmission  {
 			Recombination recombination = recombinationMap.get(recombinationScheme);
 			Mutation mutation = mutationMap.get(config.get(MUTATION));
 
+			// possible activate debugmode (alls print statements are active)
+			terminationContext.setDebug(DEBUG);
+
 			// init population
 			Population population = new Population(POPULATIONSIZE, GENOMESIZE, evaluation_, terminationContext);
 
@@ -241,7 +246,7 @@ public class player50 implements ContestSubmission  {
 
 				// notify user of start
 				System.out.println(String.format("Start generation: %d", terminationContext.getGenerationNumber()));
-				System.out.println(String.format("Number of exhausted evaluations: %d out of %d", terminationContext.getDoneEvaluations(), evaluations_limit_));
+				terminationContext.debugLine(String.format("Number of exhausted evaluations: %d out of %d", terminationContext.getDoneEvaluations(), evaluations_limit_));
 
 				// do one generation
 				population.runGeneration(evaluation_, mutation, recombination, survivalSelection, parentSelection, terminationContext);
@@ -256,16 +261,16 @@ public class player50 implements ContestSubmission  {
 
 				// notify user of progress
 				statistics.printLastStatistics();
-				System.out.println("Finished generation\n");
+				terminationContext.debugLine("Finished generation\n");
 
 				//++ generation number
 				terminationContext.addGeneration();
 			}
 
 			// final notification
-			System.out.println("Final score:");
+			terminationContext.debugLine("Final score:");
 			statistics.printLastStatistics();
-			System.out.println("Done evolving");
+			terminationContext.debugLine("Done evolving");
 
 			// export run
 			if (LOG) {
