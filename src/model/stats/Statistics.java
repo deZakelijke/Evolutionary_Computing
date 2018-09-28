@@ -57,8 +57,12 @@ public class Statistics {
 
     }
 
+    public Statistic getLast() {
+        return run.get(run.size()-1);
+    }
+
     public void printLastStatistics() {
-        System.out.println(run.get(run.size()-1).toString());
+        System.out.println(getLast().toString());
     }
 
 }

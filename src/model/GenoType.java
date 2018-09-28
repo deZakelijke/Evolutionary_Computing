@@ -13,14 +13,14 @@ public class GenoType {
     private double[] genome;
     private int size = 0;
 
-    public double[] onePointCrossover(int index, GenoType partnersDNA) {
-        double[] newGenome = new double[size];
-        for (int i = 0; i < genome.length-1; i++) {
-            double[] target = i < index ? genome : partnersDNA.getGenome();
-            newGenome[i] = target[i];
-        }
-        return newGenome;
-    }
+    // public double[] onePointCrossover(int index, GenoType partnersDNA) {
+    //     double[] newGenome = new double[size];
+    //     for (int i = 0; i < genome.length-1; i++) {
+    //         double[] target = i < index ? genome : partnersDNA.getGenome();
+    //         newGenome[i] = target[i];
+    //     }
+    //     return newGenome;
+    // }
 
 
     public GenoType(double[] genome) {
@@ -65,6 +65,14 @@ public class GenoType {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+
+    public double getAllele(int index) {
+        if (index >= this.size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return genome[index];
     }
 
     /**

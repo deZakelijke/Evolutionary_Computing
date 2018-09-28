@@ -42,17 +42,17 @@ public class Statistic {
     @Override
     public String toString() {
         return "Statistic{" +
-                "populationSize=" + populationSize +
-                ", minFitness=" + minFitness +
-                ", maxFitness=" + maxFitness +
-                ", averageFitness=" + averageFitness +
-                ", stdevFitness=" + stdevFitness +
-                ", maxAge=" + maxAge +
-                ", minAge=" + minAge +
-                ", averageAge=" + averageAge +
-                ", stdevAge=" + stdevAge +
-                ", averageOfstdevGenomes=" + averageOfstdevGenomes +
-                ", stdevGenomes=" + Arrays.toString(stdevGenomes) +
+                "\"populationSize\":" + populationSize +
+                ", \"minFitness\":" + minFitness +
+                ", \"maxFitness\":" + maxFitness +
+                ", \"averageFitness\":" + averageFitness +
+                ", \"stdevFitness\":" + stdevFitness +
+                ", \"maxAge\":" + maxAge +
+                ", \"minAge\":" + minAge +
+                ", \"averageAge\":" + averageAge +
+                ", \"stdevAge\":" + stdevAge +
+                ", \"averageOfstdevGenomes\":" + averageOfstdevGenomes +
+                ", \"stdevGenomes\":" + Arrays.toString(stdevGenomes) +
                 '}';
     }
 

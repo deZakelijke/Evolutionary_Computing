@@ -42,7 +42,7 @@ public class EmptyTermination implements TerminationContext {
     @Override
     public void debugLine(String line) {
         if (debug) {
-            System.out.println(line);
+            System.err.println(line);
         }
     }
 

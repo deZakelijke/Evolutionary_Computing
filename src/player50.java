@@ -73,7 +73,7 @@ public class player50 implements ContestSubmission  {
 		// note: vanwege dependencies maar geen json inlezen maar gewoon een map
 		Map<String, String> config  = new HashMap();
 
-		config.put(	TERMINATION, 		"evaluation_based");
+		config.put(	TERMINATION, 		"generation_based");
 		config.put(	SURVIVAL, 			"fixed_population_worst");
 		config.put(	MUTATION, 			"gaussian");
 
@@ -89,8 +89,8 @@ public class player50 implements ContestSubmission  {
 		NUMBER_OF_COUPLES = (int) Math.round((POPULATIONSIZE*REPRODUCTIONRATE)/NUMBER_OF_PARENTS);
 		SCORE_TERMINATION = 9.5;
 		GENERATION_TERMINATION = 100;
-		RUNS_PER_CONFIG = 100;
-		DEBUG = false;
+		RUNS_PER_CONFIG = 2;
+		DEBUG = true;
 
 
 		return config;
@@ -137,7 +137,7 @@ public class player50 implements ContestSubmission  {
 
 		// Set evaluation problem used in the run
 		evaluation_ = evaluation;
-		
+
 		// Get evaluation properties
 		Properties props = evaluation.getProperties();
         // Get evaluation limit
@@ -163,10 +163,14 @@ public class player50 implements ContestSubmission  {
 
 		long startTime = new Date().getTime();
 
-		// define what is to be tested
+		/** #######################################################
+		 *  DEFINE TESTS
+		 *  ############################################# */
 		List<String> parentSchemes = Arrays.asList("uniform");
 		List<String> recombinationSchemes = Arrays.asList("empty");
 		List<Integer> parents = Arrays.asList(2);
+		//  ##################################################   er staat geen recombination op git atm, jawel maar lokaal
+
 
         getRunConfiguration();
 
@@ -185,13 +189,14 @@ public class player50 implements ContestSubmission  {
 
 					// do a number of experiments for statistical significance
 					for (int i = 0; i < RUNS_PER_CONFIG; i++) {
-
+						System.out.println(String.format("---Run {\"parentScheme\": %s, \"recombinationScheme\": %s, \"nr_of_parents\": %d }", parentScheme, recombinationScheme, parent_nr));
 						System.out.println(String.format("Sarting run %d out of %d", i, RUNS_PER_CONFIG));
 
 						String runName = "experiment="+ String.valueOf(startTime) + "_n=" +String.valueOf(i);
 
 						do_EA_Run(runName, parentScheme,recombinationScheme, parent_nr);
 
+						System.out.println("---Finished run---");
 					}
 				}
 			}
@@ -244,7 +249,7 @@ public class player50 implements ContestSubmission  {
 			while (true) {
 
 				// notify user of start
-				System.out.println(String.format("Start generation: %d", terminationContext.getGenerationNumber()));
+				terminationContext.debugLine(String.format("Start generation: %d", terminationContext.getGenerationNumber()));
 				terminationContext.debugLine(String.format("Number of exhausted evaluations: %d out of %d", terminationContext.getDoneEvaluations(), evaluations_limit_));
 
 				// do one generation
@@ -260,6 +265,7 @@ public class player50 implements ContestSubmission  {
 
 				// notify user of progress
 				statistics.printLastStatistics();
+				terminationContext.debugLine(statistics.getLast().toString());
 				terminationContext.debugLine("Finished generation\n");
 
 				//++ generation number

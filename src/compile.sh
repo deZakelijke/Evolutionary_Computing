@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(pwd)"
 
 # Compile step:
 javac -cp .:contest.jar player50.java
@@ -8,21 +9,6 @@ find -name "*.java" > ../sources.txt
 cd ..
 python compile.py
 
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(pwd)"
 
-
-# # old !!
-# # Compile step:
-# javac -cp .:contest.jar player50.java
-# cd model
-# find -name "*.java" > ../sources.txt
-# cd ..
-# python compile.py
-# javac -cp contest.jar @sources.txt
-
-# jar cmf MainClass.txt submission.jar player50.class model/mutation/BasicMutation.class model/mutation/EmptyMutation.class model/mutation/MutationInterface.class model/recombination/RecombinationInterface.class model/recombination/EmptyRecombination.class model/recombination/BasicRecombination.class model/Population.class model/Individual.class model/terminator/EmptyTerminator.class model/terminator/BasicTerminator.class model/terminator/Terminator.class model/natural_selection/EmptyNaturalSelection.class model/natural_selection/NaturalSelectionInterface.class model/natural_selection/BasicNaturalSelection.class model/Genome.class model/sexual_selection/SexualSelectionInterface.class model/sexual_selection/BasicSexualSelection.class model/sexual_selection/EmptySexualSelection.class
-
-
-# #javac -cp .:classes.jar:contest.jar player50.java
-# #jar cmf MainClass.txt submission.jar @sources.txt
-
-# #javac -cp contest.jar player50.java
+java -jar testrun.jar -submission=player50 -evaluation=BentCigarFunction -seed=1 2>./log/jeLogBitch.txt | tee ./log/jeRunBitch.txt
