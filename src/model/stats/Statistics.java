@@ -28,35 +28,6 @@ public class Statistics {
         run.add(stat);
     }
 
-    /**
-     * Exports a run to a csv file for analysis and plotting
-     * @param filename
-     */
-    public void exportRun(String filename) {
-
-            List<String> data = accumelateData();
-
-            //todo: max
-
-
-        throw new NotImplementedException();
-
-    }
-
-    /**
-     * retrieves data from run list
-     * @return
-     */
-    private List<String> accumelateData() {
-        //todo: get real data
-
-        List<String> data = new ArrayList<>();
-        data.add("a,b,c");
-        data.add("d,e,f");
-        return data;
-
-    }
-
     public Statistic getLast() {
         return run.get(run.size()-1);
     }

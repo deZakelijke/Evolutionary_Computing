@@ -20,5 +20,5 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(pwd)"
 mkdir ./log/
 
 java -jar testrun.jar -submission=player50 -evaluation=BentCigarFunction -seed=1 1> "$CIGAR" | tee "$CIGAR"
-java -jar testrun.jar -submission=player50 -evaluation=SchaffersEvaluation -seed=1 1> "$SCHAFFERS" | tee "$SCHAFFERS"
-java -jar testrun.jar -submission=player50 -evaluation=KatsuuraEvaluation -seed=1 1> "$KATSUURA" | tee "$KATSUURA"
+#java -jar testrun.jar -submission=player50 -evaluation=SchaffersEvaluation -seed=1 1> "$SCHAFFERS" | tee "$SCHAFFERS"
+#java -jar testrun.jar -submission=player50 -evaluation=KatsuuraEvaluation -seed=1 1> "$KATSUURA" | tee "$KATSUURA"

@@ -35,8 +35,6 @@ public class player50 implements ContestSubmission  {
 	private static final String RECOMBINATION ="RECOMBINATION";
 	private static final String TERMINATION ="TERMINATION";
 
-	private boolean LOG;
-
     private Map<String, Mutation> mutationMap = new HashMap<>();
 	private Map<String, SurvivalSelection> survivalSelectionMap = new HashMap<>();
 	private Map<String, ParentSelection> parentSelectionMap = new HashMap<>();
@@ -69,24 +67,24 @@ public class player50 implements ContestSubmission  {
 		// note: vanwege dependencies maar geen json inlezen maar gewoon een map
 		Map<String, String> config  = new HashMap();
 
-		config.put(	TERMINATION, 		"generation_based");
+		config.put(	TERMINATION, 		"evaluation_based");
 		config.put(	SURVIVAL, 			"fixed_population_worst");
 		config.put(	MUTATION, 			"gaussian");
 
-		// determines wether run will be logged
-		LOG = false;
+		// determines wether run will be logged to screen
+		DEBUG = true;
 
 		//other run variables
 		POPULATIONSIZE = 100;
 		GENOMESIZE = 10;
 		MUTATIONRATE = 0.8;
-		REPRODUCTIONRATE = 0.3;
+		REPRODUCTIONRATE = 0.9;
 		NUMBER_OF_PARENTS = 2;
 		NUMBER_OF_COUPLES = (int) Math.round((POPULATIONSIZE*REPRODUCTIONRATE)/NUMBER_OF_PARENTS);
 		SCORE_TERMINATION = 9.5;
-		GENERATION_TERMINATION = 100;
+		GENERATION_TERMINATION = 10;
 		RUNS_PER_CONFIG = 2;
-		DEBUG = true;
+
 
 
 		return config;
@@ -169,10 +167,10 @@ public class player50 implements ContestSubmission  {
 		/** #######################################################
 		 *  DEFINE TESTS
 		 *  ############################################# */
-		List<String> parentSchemes = Arrays.asList("uniform", "deterministic_fitness");
+		List<String> parentSchemes = Arrays.asList("uniform");
 //		List<String> recombinationSchemes = Arrays.asList("uniform", "simple_arithmetic");
 		List<String> recombinationSchemes = Arrays.asList("simple_arithmetic");
-		List<Integer> parents = Arrays.asList(2,3,4,5,6,7,8,9,10);
+		List<Integer> parents = Arrays.asList(2);
 		//  ##################################################   er staat geen recombination op git atm, jawel maar lokaal
 
 
@@ -277,21 +275,15 @@ public class player50 implements ContestSubmission  {
 			}
 
 			// final notification
-			terminationContext.debugLine("Final score:");
+			terminationContext.debugLine("Final score:" + statistics.getLast().toString());
 			statistics.printLastStatistics();
-			terminationContext.debugLine("Done evolving");
+			terminationContext.debugLine("Done evolving\n\n");
 
 			// export run
-			if (LOG) {
-				statistics.exportRun(String.format("/results/run_%s.csv", runName));
-			}
 
 		} catch (Exception e) {
 
 			// export run
-			if (LOG) {
-				statistics.exportRun(String.format("/results/error_run_%s.csv", runName));
-			}
 			e.printStackTrace();
 			throw e;
 

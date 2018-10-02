@@ -1,6 +1,7 @@
 package model;
 
 
+import model.exception.EvaluationsExhaustedException;
 import model.mutation.Mutation;
 import model.stats.StatisticUtil;
 import model.survival_selection.SurvivalSelection;
@@ -11,6 +12,7 @@ import model.termination.TerminationContext;
 import org.vu.contest.ContestEvaluation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,8 +58,23 @@ public class Population {
 
         // evaluate first, EA Fase: evaluate initial population
         for (Individual initialIndividual : populationList) {
-            initialIndividual.setFitness((double) evaluator.evaluate(initialIndividual.getGenoType().getGenome()));
-            terminator.addEvaluation();
+            try {
+                if (terminator.isItDone(this)) {
+                    throw new EvaluationsExhaustedException(terminator.getDoneEvaluations(), evaluator);
+                }
+                try {
+                    initialIndividual.setFitness((double) evaluator.evaluate(initialIndividual.getGenoType().getGenome()));
+                } catch (NullPointerException passOn) {
+                    throw new EvaluationsExhaustedException(passOn);
+                }
+                terminator.addEvaluation();
+            } catch (EvaluationsExhaustedException e) {
+                e.printStackTrace();
+                terminator.debugLine(e.toString());
+                terminator.debugLine("Warning, stopped creation population, check evaluation object!! you might have used an old one that is already over its limit");
+                killRun(1);
+                break;
+            }
         }
         reCalculateStats();
     }
@@ -76,6 +93,10 @@ public class Population {
             newPopulation.add(new Individual(new GenoType(sizeGenomes)));
         }
         return newPopulation;
+    }
+
+    private void killRun(int code) {
+        System.exit(code);
     }
 
     /**
@@ -115,8 +136,22 @@ public class Population {
             // reevaluate
             terminatorContext.debugLine("Evaluating children");
             for (Individual child : children) {
-                child.setFitness((double) evaluator.evaluate(child.getGenoType().getGenome()));
-                terminatorContext.addEvaluation();
+                try {
+                    if (terminatorContext.isItDone(this)) {
+                        throw new EvaluationsExhaustedException(terminatorContext.getDoneEvaluations(), evaluator);
+                    }
+                    try {
+                        child.setFitness((double) evaluator.evaluate(child.getGenoType().getGenome()));
+                    } catch (NullPointerException passOn) {
+                        throw new EvaluationsExhaustedException(passOn);
+                    }
+                    terminatorContext.addEvaluation();
+                } catch (EvaluationsExhaustedException e) {
+                    e.printStackTrace();
+                    terminatorContext.debugLine(e.toString());
+                    terminatorContext.debugLine("Warning, stopped evaluating children, probably because you ran out of evaluations");
+                    break;
+                }
             }
 
             // add newbournes to population
