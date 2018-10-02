@@ -3,13 +3,9 @@ import model.mutation.GaussianMutation;
 import model.mutation.EmptyMutation;
 import model.mutation.Mutation;
 import model.mutation.UniformMutation;
+import model.parent_selection.*;
+import model.recombination.*;
 import model.survival_selection.*;
-import model.recombination.EmptyRecombination;
-import model.recombination.OnePointRandomRecombination;
-import model.recombination.Recombination;
-import model.parent_selection.UniformParentSelection;
-import model.parent_selection.EmptyParentSelection;
-import model.parent_selection.ParentSelection;
 import model.stats.Statistics;
 import model.termination.*;
 import org.vu.contest.ContestSubmission;
@@ -124,10 +120,17 @@ public class player50 implements ContestSubmission  {
 		// parent selections
 		parentSelectionMap.put("empty", new EmptyParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
 		parentSelectionMap.put("uniform", new UniformParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		parentSelectionMap.put("deterministic_fitness", new DeterministicFitnessParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		parentSelectionMap.put("ranking_parent", new DeterministicFitnessParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		parentSelectionMap.put("stochastic_parent", new StochasticParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		parentSelectionMap.put("stochastic_parent_no_repitition", new StochasticParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
+		parentSelectionMap.put("tournament_parent", new TournamentParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES, 15));
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
-		recombinationMap.put("one_point_random", new OnePointRandomRecombination());
+		recombinationMap.put("uniform", new UniformRecombination());
+		recombinationMap.put("simple_arithmetic", new SimpleArithmeticRecombination());
+//		recombinationMap.put("one_point_random", new OnePointRandomRecombination());
 
 	}
 
@@ -166,9 +169,10 @@ public class player50 implements ContestSubmission  {
 		/** #######################################################
 		 *  DEFINE TESTS
 		 *  ############################################# */
-		List<String> parentSchemes = Arrays.asList("uniform");
-		List<String> recombinationSchemes = Arrays.asList("empty");
-		List<Integer> parents = Arrays.asList(2);
+		List<String> parentSchemes = Arrays.asList("uniform", "deterministic_fitness");
+//		List<String> recombinationSchemes = Arrays.asList("uniform", "simple_arithmetic");
+		List<String> recombinationSchemes = Arrays.asList("simple_arithmetic");
+		List<Integer> parents = Arrays.asList(2,3,4,5,6,7,8,9,10);
 		//  ##################################################   er staat geen recombination op git atm, jawel maar lokaal
 
 
