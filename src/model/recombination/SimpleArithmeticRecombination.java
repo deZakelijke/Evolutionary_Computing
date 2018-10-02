@@ -31,7 +31,7 @@ public class SimpleArithmeticRecombination implements Recombination {
                 }
             }
 
-            for (int i = 0; j < arithmeticAverage.length; i++) {
+            for (int i = 0; i < arithmeticAverage.length; i++) {
                 arithmeticAverage[i] /= parentCount;
             }
 
