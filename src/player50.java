@@ -40,12 +40,12 @@ public class player50 implements ContestSubmission  {
 	private Map<String, ParentSelection> parentSelectionMap = new HashMap<>();
 	private Map<String, Recombination> recombinationMap = new HashMap<>();
 	private Map<String, TerminationContext> terminationContextMap = new HashMap<>();
-	
+
 	public player50()
 	{
 		rnd_ = new Random();
 	}
-	
+
 	public void setSeed(long seed)
 	{
 		// Set seed of algortihms random process
@@ -82,9 +82,8 @@ public class player50 implements ContestSubmission  {
 		NUMBER_OF_PARENTS = 2;
 		NUMBER_OF_COUPLES = (int) Math.round((POPULATIONSIZE*REPRODUCTIONRATE)/NUMBER_OF_PARENTS);
 		SCORE_TERMINATION = 9.5;
-		GENERATION_TERMINATION = 10;
-		RUNS_PER_CONFIG = 2;
-
+		GENERATION_TERMINATION = 100;
+		RUNS_PER_CONFIG = 1;
 
 
 		return config;
@@ -164,13 +163,17 @@ public class player50 implements ContestSubmission  {
 
 		long startTime = new Date().getTime();
 
+		String parentSchemeParam = System.getProperty("parent_scheme", "uniform");
+		String recombinationSchemeParam = System.getProperty("recomb_scheme", "uniform");
+		int parentsInt = Integer.parseInt(System.getProperty("parents", "2"));
+
+
 		/** #######################################################
 		 *  DEFINE TESTS
 		 *  ############################################# */
-		List<String> parentSchemes = Arrays.asList("uniform");
-//		List<String> recombinationSchemes = Arrays.asList("uniform", "simple_arithmetic");
-		List<String> recombinationSchemes = Arrays.asList("simple_arithmetic");
-		List<Integer> parents = Arrays.asList(2);
+		List<String> parentSchemes = Arrays.asList(parentSchemeParam);
+		List<String> recombinationSchemes = Arrays.asList(recombinationSchemeParam);
+		List<Integer> parents = Arrays.asList(parentsInt);
 		//  ##################################################   er staat geen recombination op git atm, jawel maar lokaal
 
 
