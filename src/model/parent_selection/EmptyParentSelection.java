@@ -43,14 +43,10 @@ public class EmptyParentSelection implements ParentSelection {
 
     protected int get_random_index(double[] cumulative_fitness, Random r, int length) {
         double random_number = r.nextDouble() * cumulative_fitness[length - 1];
-        int index = length / 2;
+        int index = 0;
         while (!(cumulative_fitness[index] < random_number) || 
                !(cumulative_fitness[index + 1] > random_number)) {
-            if (cumulative_fitness[index] > random_number) {
-                index /= 2;
-            } else {
-                index *= 2;
-            }
+            index++;
         }
         return index;
     }
