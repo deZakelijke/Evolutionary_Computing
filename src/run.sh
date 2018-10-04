@@ -9,7 +9,7 @@ SCHAFFERS="./log/chaffers.txt"
 KATSUURA="./log/katsura.txt"
 
 declare -a ps=("uniform" "deterministic_fitness" "ranking_parent" "stochastic_parent" "stochastic_parent_no_repitition" "tournament_parent")
-declare -a rc=("uniform" "simple_arithmetic")
+declare -a rc=("uniform" "simple_arithmetic" "whole_arithmetic")
 
 for i in {2..10}
 do
@@ -26,13 +26,13 @@ do
                echo "Computing with params:" $parent_scheme $recomb_scheme $parents
 
                echo "cigar"
-#               java -Dparent_scheme=${parent_scheme} -Drecomb_scheme=${recomb_scheme} -Dparents=${parents} -jar testrun.jar -submission=player50 -evaluation=BentCigarFunction -seed=1 1>> "$CIGAR" 2> ./log/error.txt
+               java -Dparent_scheme=${parent_scheme} -Drecomb_scheme=${recomb_scheme} -Dparents=${parents} -jar testrun.jar -submission=player50 -evaluation=BentCigarFunction -seed=1 1>> "$CIGAR" 2> ./log/error.txt
 
-               echo "schaffers"
+#               echo "schaffers"
 #               java -Dparent_scheme=${parent_scheme} -Drecomb_scheme=${recomb_scheme} -Dparents=${parents} -jar testrun.jar -submission=player50 -evaluation=SchaffersEvaluation -seed=1 1>> "$SCHAFFERS" 2> /dev/null
 
-               echo "katsuura"
-               java -Dparent_scheme=${parent_scheme} -Drecomb_scheme=${recomb_scheme} -Dparents=${parents} -jar testrun.jar -submission=player50 -evaluation=KatsuuraEvaluation -seed=1 1>> "$KATSUURA" 2> ./log/error_kats.txt
+#               echo "katsuura"
+#               java -Dparent_scheme=${parent_scheme} -Drecomb_scheme=${recomb_scheme} -Dparents=${parents} -jar testrun.jar -submission=player50 -evaluation=KatsuuraEvaluation -seed=1 1>> "$KATSUURA" 2> ./log/error_kats.txt
            done
         done
     done
