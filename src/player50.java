@@ -194,7 +194,7 @@ public class player50 implements ContestSubmission  {
 
 					// do a number of experiments for statistical significance
 					for (int i = 0; i < RUNS_PER_CONFIG; i++) {
-						System.out.println(String.format("---Run {\"parentScheme\": %s, \"recombinationScheme\": %s, \"nr_of_parents\": %d }", parentScheme, recombinationScheme, parent_nr));
+						System.out.println(String.format("---Run {\"parentScheme\": \"%s\", \"recombinationScheme\": \"%s\", \"nr_of_parents\": %d }", parentScheme, recombinationScheme, parent_nr));
 						System.out.println(String.format("Sarting run %d out of %d", i, RUNS_PER_CONFIG));
 
 						String runName = "experiment="+ String.valueOf(startTime) + "_n=" +String.valueOf(i);
