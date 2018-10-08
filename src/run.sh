@@ -9,7 +9,7 @@ SCHAFFERS="./log/chaffers.txt"
 KATSUURA="./log/katsura.txt"
 
 declare -a ps=("uniform" "deterministic_fitness" "ranking_parent" "stochastic_parent" "stochastic_parent_no_repitition" "tournament_parent")
-declare -a rc=("uniform" "simple_arithmetic" "whole_arithmetic")
+declare -a rc=("uniform" "simple_arithmetic" "whole_arithmetic" "center_of_mass")
 
 for i in {2..10}
 do
@@ -37,5 +37,3 @@ do
         done
     done
 done
-
-

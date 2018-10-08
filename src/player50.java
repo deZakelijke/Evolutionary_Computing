@@ -128,6 +128,7 @@ public class player50 implements ContestSubmission  {
 		recombinationMap.put("uniform", new UniformRecombination());
 		recombinationMap.put("simple_arithmetic", new SimpleArithmeticRecombination());
 		recombinationMap.put("whole_arithmetic", new WholeArithmeticRecombination());
+        recombinationMap.put("center_of_mass", new CenterOfMassRecombination());
 //		recombinationMap.put("one_point_random", new OnePointRandomRecombination());
 
 	}
