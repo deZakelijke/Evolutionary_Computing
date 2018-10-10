@@ -121,7 +121,7 @@ public class player50 implements ContestSubmission  {
 		parentSelectionMap.put("ranking_parent", new DeterministicFitnessParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
 		parentSelectionMap.put("stochastic_parent", new StochasticParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
 		parentSelectionMap.put("stochastic_parent_no_repitition", new StochasticParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES));
-		parentSelectionMap.put("tournament_parent", new TournamentParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES, NUMER_OF_COUPLES * 3));
+		parentSelectionMap.put("tournament_parent", new TournamentParentSelection(NUMBER_OF_PARENTS, NUMBER_OF_COUPLES, NUMBER_OF_COUPLES * 3));
 
 		// recombinations
 		recombinationMap.put("empty", new EmptyRecombination());
