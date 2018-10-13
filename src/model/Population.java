@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
+import java.util.stream.IntStream;
+import java.util.stream.Collectors;
+
 
 /**
  * Population class,
@@ -39,6 +44,8 @@ public class Population {
 
     private double[] stdevGenomes = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
     private double averageOfstdevGenomes;
+
+    Random rand = new Random();
 
     /**
      * init / constructor
@@ -89,9 +96,30 @@ public class Population {
      */
     private List<Individual> createNewPopulation(int sizePopulation, int sizeGenomes) {
         List<Individual> newPopulation = new ArrayList<>(sizePopulation);
-        for (int i = 0; i < sizePopulation; i++) {
-            newPopulation.add(new Individual(new GenoType(sizeGenomes)));
+        // for (int i = 0; i < sizePopulation; i++) {
+        //     newPopulation.add(new Individual(new GenoType(sizeGenomes)));
+        // }
+        // int populationSingleDim = sizePopulation / sizeGenomes;
+        // int remainder = sizePopulation - populationSingleDim;
+
+        double[][] populationGenomes = new double[sizePopulation][sizeGenomes];
+        double recip = 1 / sizePopulation;
+
+        for (int i = 0; i < sizeGenomes; i++) {
+            List<Integer> list = IntStream.rangeClosed(0, sizePopulation - 1)
+            .boxed().collect(Collectors.toList());
+            java.util.Collections.shuffle(list);
+
+            for (int j = 0; j < sizePopulation; j++) {
+                double sampled = recip * (rand.nextDouble() + list.get(j));
+                populationGenomes[j][i] = (sampled - 0.5) * 10;
+            }
         }
+
+        for (int i = 0; i < sizePopulation; i++) {
+            newPopulation.add(new Individual(new GenoType(populationGenomes[i])));
+        }
+
         return newPopulation;
     }
 
